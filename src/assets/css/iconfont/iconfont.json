@@ -1,0 +1,37 @@
+{
+  "id": "3478114",
+  "name": "bbs",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4765896",
+      "name": "eye",
+      "font_class": "eye",
+      "unicode": "e78f",
+      "unicode_decimal": 59279
+    },
+    {
+      "icon_id": "4936668",
+      "name": "eye-fill",
+      "font_class": "eye-fill",
+      "unicode": "e869",
+      "unicode_decimal": 59497
+    },
+    {
+      "icon_id": "8092166",
+      "name": "eye close-fill",
+      "font_class": "eyeclose-fill",
+      "unicode": "e8ff",
+      "unicode_decimal": 59647
+    },
+    {
+      "icon_id": "8092167",
+      "name": "eye-close",
+      "font_class": "eye-close",
+      "unicode": "e900",
+      "unicode_decimal": 59648
+    }
+  ]
+}
