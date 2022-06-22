@@ -18,6 +18,8 @@
       <el-button id="login-button" type="primary">登录</el-button>
     </div>
 
+    <div class="other-login-method">其他登录方式</div>
+
 
   </div>
 </template>
@@ -86,6 +88,13 @@ export default {
   color: #b1b9d5;
 }
 
+.other-login-method {
+  width: fit-content;
+  margin: 20px auto;
+  color: #b1b9d5;
+  font-size: small;
+}
+
 #login-button {
   width: 360px;
   margin-top: 20px;
@@ -95,7 +104,6 @@ export default {
   padding-bottom: 10px;
   background-color: #0066ff;
 }
-
 /deep/ .el-input__inner {
   border: 0;
   border-bottom: 1px solid #ebebeb;
@@ -111,8 +119,5 @@ export default {
   height: fit-content;
 }
 
-.input-password {
-
-}
 
 </style>

@@ -33,8 +33,8 @@ h1 {
 }
 
 .login {
-  height: inherit;
-  background: url("../assets/images/login_background.jpg") no-repeat fixed;
+  height: 100vh;
+  background: url("/src/assets/images/login_background.jpg") no-repeat fixed;
   background-size: 100% 100%;
 }
 

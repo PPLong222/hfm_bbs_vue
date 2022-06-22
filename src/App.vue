@@ -10,14 +10,12 @@
 
 <style>
 /*便于使得元素全屏显示*/
-html, body, #app {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+body {
+  margin: 0;
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "PingFang SC", Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /*color: #2c3e50;*/
