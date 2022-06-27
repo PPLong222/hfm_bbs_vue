@@ -20,13 +20,24 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'login',
+    name: '/login',
     component: () => import('@/views/login/LoginView')
   },
   {
     path: '/signup',
-    name: 'signup',
+    name: '/signup',
     component: () => import('@/views/login/SignUpView')
+  },
+  {
+    path: '/signup/emailConfirm',
+    name: '/signup/emailConfirm',
+    component: () => import('@/views/login/EmailConfirmVue')
+  },
+  {
+    path: '/index',
+    name: '/index',
+    component: () => import('@/views/page/IndexView')
+
   },
 ]
 

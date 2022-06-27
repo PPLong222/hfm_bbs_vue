@@ -1,30 +1,51 @@
 @font-face {
-    font-family: "iconfont"; /* Project id 3478114 */
-    src: url('iconfont.woff2?t=1655810036957') format('woff2'),
-    url('iconfont.woff?t=1655810036957') format('woff'),
-    url('iconfont.ttf?t=1655810036957') format('truetype');
+  font-family: "iconfont"; /* Project id 3478114 */
+  src: url('iconfont.woff2?t=1656331380215') format('woff2'),
+  url('iconfont.woff?t=1656331380215') format('woff'),
+  url('iconfont.ttf?t=1656331380215') format('truetype');
 }
 
 .iconfont {
-    font-family: "iconfont" !important;
-    font-size: 28px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-star:before {
+  content: "\e7e0";
+}
+
+.icon-star-fill:before {
+  content: "\e86a";
+}
+
+.icon-heart:before {
+  content: "\e7df";
+}
+
+.icon-heart-fill:before {
+  content: "\e849";
+}
+
+.icon-comment:before {
+  content: "\e8e8";
 }
 
 .icon-eye:before {
-    content: "\e78f";
+  content: "\e78f";
 }
 
 .icon-eye-fill:before {
-    content: "\e869";
+  content: "\e869";
 }
 
 .icon-eyeclose-fill:before {
-    content: "\e8ff";
+  content: "\e8ff";
 }
 
 .icon-eye-close:before {
-    content: "\e900";
+  content: "\e900";
 }
+

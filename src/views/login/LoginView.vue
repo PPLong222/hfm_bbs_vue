@@ -3,6 +3,7 @@
     <h1>Summti</h1>
     <div class="sub-desc">一个干净纯粹的技术分享论坛</div>
     <login-panel id="login-panel"></login-panel>
+
   </div>
 </template>
 
@@ -33,9 +34,12 @@ h1 {
 }
 
 .login {
-  height: 100vh;
-  background: url("/src/assets/images/login_background.jpg") no-repeat fixed;
-  background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+  background: url("/src/assets/images/login_background.jpg") no-repeat;
+  background-size: cover;
+  /*解决缩小窗口后出现空白的情况*/
+  overflow: auto;
 }
 
 #login-panel {

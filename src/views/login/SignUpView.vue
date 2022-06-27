@@ -4,7 +4,6 @@
     <div class="el-container">
       <el-col :span="16">
         <div class="grid-content">
-
         </div>
       </el-col>
       <el-col :span="8">
@@ -30,7 +29,7 @@ export default {
   height: 100vh;
   background: url("/src/assets/images/login_background.jpg") no-repeat fixed;
   background-size: 100% 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .el-container {
