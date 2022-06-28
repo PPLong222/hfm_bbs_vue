@@ -2,13 +2,13 @@
   <div class="m-content">
     <!--    <h3>欢迎来到您的博客</h3>-->
     <div style="float: left">
-      <span class="aspect"><el-link href="/blogs"><h2 style="color: #06f;margin-left: 50px">主页</h2></el-link></span>
-      <span class="aspect"><el-link href="/blogs"><h3>下载·课程</h3></el-link></span>
-      <span class="aspect"><el-link href="/blogs"><h3>学习</h3></el-link></span>
-      <span class="aspect"><el-link href="/blogs"><h3>社区</h3></el-link></span>
-      <span class="aspect"><el-link href="/blogs"><h3>认证</h3></el-link></span>
-      <span class="aspect"><el-link href="/blogs"><h3>MyGitHub</h3></el-link></span>
-      <span class="aspect"><el-link href="/blogs"><h3>云服务</h3></el-link></span>
+      <span class="aspect"><el-link href="/posts"><h2 style="color: #06f;margin-left: 50px">主页</h2></el-link></span>
+      <span class="aspect"><el-link href="/posts"><h3>下载·课程</h3></el-link></span>
+      <span class="aspect"><el-link href="/posts"><h3>学习</h3></el-link></span>
+      <span class="aspect"><el-link href="/posts"><h3>社区</h3></el-link></span>
+      <span class="aspect"><el-link href="/posts"><h3>认证</h3></el-link></span>
+      <span class="aspect"><el-link href="/posts"><h3>MyGitHub</h3></el-link></span>
+      <span class="aspect"><el-link href="/posts"><h3>云服务</h3></el-link></span>
     </div>
     <!--    <div class="block" style="float: right">-->
     <!--      <el-avatar :size="40" :src="user.avatar"></el-avatar>-->
@@ -36,13 +36,13 @@
 
     <!--    <div>{{user.username}}</div>-->
     <div class="m-action">
-      <!--      <span><el-link href="/blogs">主页</el-link></span>-->
+      <!--      <span><el-link href="/posts">主页</el-link></span>-->
       <!--      <el-divider direction="vertical"></el-divider>-->
-      <span><el-link href="/blog/add"><i class="el-icon-edit el-icon-style"></i></el-link></span>
+      <span><el-link href="/post/add"><i class="el-icon-edit el-icon-style"></i></el-link></span>
       <el-divider direction="vertical"></el-divider>
-      <span><el-link href="/blog/add"><i class="el-icon-bell el-icon-style"></i></el-link></span>
+      <span><el-link href="/post/add"><i class="el-icon-bell el-icon-style"></i></el-link></span>
       <el-divider direction="vertical"></el-divider>
-      <span><el-link href="/blog/add"><i class="el-icon-chat-dot-square el-icon-style"></i></el-link></span>
+      <span><el-link href="/post/add"><i class="el-icon-chat-dot-square el-icon-style"></i></el-link></span>
     </div>
 
     <div class="search">

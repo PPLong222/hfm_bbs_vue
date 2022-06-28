@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import BlogEdit from "@/views/blog/BlogEdit";
-import BlogDetail from "@/views/blog/BlogDetail";
-import Blogs from "@/views/blog/Blogs";
+import PostEdit from "@/views/post/PostEdit";
+import PostDetail from "@/views/post/PostDetail";
 
 Vue.use(VueRouter)
 
@@ -43,34 +42,34 @@ const routes = [
 
   },
   {
-    path: '/blogs',
-    name: 'Blogs',
+    path: '/posts',
+    name: 'Posts',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     // 懒加载
-    component: () => import(/* webpackChunkName: "about" */ '../views/blog/Blogs.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/post/Posts.vue')
   },
   {
-    path: '/blog/add',// 注意放在 path: '/blog/:blogId'之前，否则会匹配重复
-    name: 'BlogAdd',
+    path: '/post/add',// 注意放在 path: '/post/:postId'之前，否则会匹配重复
+    name: 'PostAdd',
     // meta: {
     //   requireAuth: true//带有meta：requireAuth: true说明是需要登录字后才能访问的受限资源
     // },
-    component: BlogEdit
+    component: PostEdit
   },
   {
-    path: '/blog/:blogId',
-    name: 'BlogDetail',
-    component: BlogDetail
+    path: '/post/:postId',
+    name: 'PostDetail',
+    component: PostDetail
   },
   {
-    path: '/blog/:blogId/edit',
-    name: 'BlogEdit',
+    path: '/post/:postId/edit',
+    name: 'PostEdit',
     // meta: {
     //   requireAuth: true//带有meta：requireAuth: true说明是需要登录字后才能访问的受限资源
     // },
-    component: BlogEdit
+    component: PostEdit
   },
 ]
 

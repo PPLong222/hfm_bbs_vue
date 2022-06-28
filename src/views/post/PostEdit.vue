@@ -3,15 +3,15 @@
     <Header></Header>
     <div class="allContainer">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="文章标题" prop="title">
+        <el-form-item class="characterStyle" label="文章标题" prop="title">
           <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
 
-        <el-form-item label="摘要" prop="description">
+        <el-form-item class="characterStyle" label="摘要" prop="description">
           <el-input type="textarea" v-model="ruleForm.description"></el-input>
         </el-form-item>
 
-        <el-form-item label="内容" prop="content">
+        <el-form-item class="characterStyle" label="内容" prop="content">
           <mavon-editor v-model="ruleForm.content" class="editor"></mavon-editor>
         </el-form-item>
 
@@ -32,11 +32,12 @@
 </template>
 
 <script>
-import Header from "@/components/blog/Header";
-import postDialogue from "@/components/blog/postDialogue";
+import Header from "@/components/post/Header";
+import PostDialogue from "@/components/post/PostDialogue";
+
 export default {
-  name: "BlogEdit",
-  components: {postDialogue, Header},
+  name: "PostEdit",
+  components: {PostDialogue, Header},
   data() {
     return {
       visible: false,
@@ -46,7 +47,7 @@ export default {
         id: '',
         title: '',
         description: '',
-        content:''
+        content: ''
       },
       rules: {
         title: [
@@ -72,8 +73,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const _this=this
-          this.$axios.post('/blog/edit',this.ruleForm,{
-            headers:{
+          this.$axios.post('/post/edit', this.ruleForm, {
+            headers: {
               "Authorization": localStorage.getItem("token")
             }
           }).then(res=>{
@@ -81,7 +82,7 @@ export default {
             _this.$alert('提交成功', '提示', {
               confirmButtonText: '确定',
               callback: action => {
-                _this.$router.push("/blogs")
+                _this.$router.push("/posts")
               }
             });
           })
@@ -101,15 +102,15 @@ export default {
   },
   created() {
     //重新编辑文章页面回显
-    const blogId=this.$route.params.blogId
-    const _this=this
-    if(blogId){
-      this.$axios.get('/blog/'+blogId).then(res=>{
-        const blog = res.data.data
-        _this.ruleForm.id=blog.id
-        _this.ruleForm.title=blog.title
-        _this.ruleForm.description=blog.description
-        _this.ruleForm.content=blog.content
+    const postId = this.$route.params.postId
+    const _this = this
+    if (postId) {
+      this.$axios.get('/post/' + postId).then(res => {
+        const post = res.data.data
+        _this.ruleForm.id = post.id
+        _this.ruleForm.title = post.title
+        _this.ruleForm.description = post.description
+        _this.ruleForm.content = post.content
 
       })
     }
@@ -140,13 +141,21 @@ export default {
   margin-left: 10px;
   vertical-align: bottom;
 }
-.demo-ruleForm{
+
+.demo-ruleForm {
   margin-top: 20px;
 }
-.editor{
+
+.editor {
   height: 500px;
 }
-/deep/ .el-form-item__label{
+
+/*/deep/ .el-form-item__label{*/
+/*  color: #06f;*/
+/*  font-weight: bold;*/
+/*}*/
+
+/deep/ .characterStyle .el-form-item__label {
   color: #06f;
   font-weight: bold;
 }
