@@ -11,3 +11,5 @@ export const signup = (userName, email, password) =>
 
 export const confirmCode = (email, code) =>
     post("/signup/confirm", {email, code})
+
+export const getTestPost = (p) => get("/test/test_post", p)

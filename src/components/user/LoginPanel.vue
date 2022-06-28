@@ -48,6 +48,8 @@ function onPwdButtonClick() {
 }
 
 function onLoginButtonClick() {
+  // 先清空本地Cookie
+  this.utils.clearCookieByName("token")
   //检查合法性
   if (this.utils.isFormValid('userForm', this)) {
     login(this.userForm.userName, this.userForm.password).then(res => {
@@ -55,11 +57,11 @@ function onLoginButtonClick() {
         // 浏览器存入token
         let token = res.data.token
         if (token != null) {
-          // 暂时认为没有其他cookie,如果有的话有需要做判断并且append
-          document.cookie = "token=" + token + escape(';')
+          document.cookie = "token=" + token
+          document.cookie = "expireAt=" + res.data.expireAt
         }
         // 登录成功
-        this.$router.push("/about")
+        this.$router.push("/index")
       }
     }).catch(err => {
     })

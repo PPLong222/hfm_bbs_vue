@@ -10,6 +10,7 @@ import axios from "axios";
 import utils from "@/utils/utils"
 
 const request = axios.create({
+    // 在这里写baseURL会让proxy的pathRewrite无效
     baseURL: BASE_URL,
     timeout: 10000
 })
@@ -19,15 +20,17 @@ request.defaults.headers["Content-Type"] = "application/json"
 request.interceptors.request.use(
     req => {
         // 看Cookie中有没有token请求头, 如果有就加上
-        console.log("on axios request interceptor")
         let token = utils.getCookieByName("token")
+        console.log("on axios request interceptor")
+        console.log("request header token : " + token)
         if (token != null) {
             req.headers["token"] = token
         }
         return req
     },
     error => {
-
+        console.log("axios request hook err")
+        console.log(error)
     }
 )
 request.interceptors.response.use(
@@ -39,6 +42,7 @@ request.interceptors.response.use(
         }
     },
     error => {
+        console.log(error)
         if (error.status) {
             console.log(error.status.code)
             switch (error.status.code) {
@@ -70,7 +74,6 @@ export function get(url, params) {
 export function post(url, params) {
     return new Promise((resolve, reject) => {
         request.post(url, JSON.stringify(params)).then(res => {
-            console.log(JSON.stringify(params))
             resolve(res.data)
         }).catch(err => {
             reject(err)

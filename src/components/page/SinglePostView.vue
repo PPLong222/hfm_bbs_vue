@@ -17,6 +17,7 @@
 
       <span class="post-author-text">作者: {{ postData.author }}</span>
     </div>
+
   </div>
 </template>
 
@@ -33,10 +34,12 @@ export default {
 @import "../../assets/css/iconfont/iconfont.css";
 
 .post-container {
-  height: 240px;
+  height: fit-content;
+  max-height: 280px;
   width: auto;
-  padding: 20px 10px 10px 10px;
-  background-color: red;
+  margin: 20px 10px 10px 10px;
+  background-color: white;
+  border-bottom: 2px solid #8c8c93;
 }
 
 h1 {
@@ -90,5 +93,17 @@ h1 {
 
 .post-author-text {
   margin-left: 30px;
+}
+
+.post-title {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  overflow: hidden;
+  height: fit-content;
+  font-size: 20px;
+  font-weight: 700;
 }
 </style>

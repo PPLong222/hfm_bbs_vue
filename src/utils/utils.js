@@ -5,19 +5,19 @@ export default {
         }
         return false;
     },
-    getCookieByName(name) {
-        let cookies = unescape(document.cookie).split(";")
-        console.log(cookies)
-        for (let i = 0; i < cookies.length; i++) {
-            let obj = cookies[i].split("=")
-            if (obj[0] === name) {
-                return obj[1];
-            }
-        }
-        return null
-    },
     clearCookieByName(name) {
         document.cookie = name + "=";
+    },
+    getCookieByName(name) {
+        let cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            let obj = cookies[i].split("=");
+            console.log(obj[1])
+            // trim剔除多余的空格
+            if (obj[0].trim() === name) {
+                return obj[1]
+            }
+        }
     },
     isNullOrNil(str) {
         if (str == null || str.length < 1) {
