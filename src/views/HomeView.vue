@@ -13,7 +13,7 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
-import {getTestPost} from "@/api/api";
+import {getTestPostList} from "@/api/api";
 
 export default {
   name: 'HomeView',
@@ -30,7 +30,7 @@ export default {
       // }).catch(err=>{
       //   console.log(err)
       // })
-      getTestPost(null).then(res => {
+      getTestPostList(null).then(res => {
         console.log(res)
       }).catch(err => {
         console.log(err)

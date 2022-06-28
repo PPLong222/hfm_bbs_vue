@@ -21,15 +21,12 @@ request.interceptors.request.use(
     req => {
         // 看Cookie中有没有token请求头, 如果有就加上
         let token = utils.getCookieByName("token")
-        console.log("on axios request interceptor")
-        console.log("request header token : " + token)
         if (token != null) {
             req.headers["token"] = token
         }
         return req
     },
     error => {
-        console.log("axios request hook err")
         console.log(error)
     }
 )

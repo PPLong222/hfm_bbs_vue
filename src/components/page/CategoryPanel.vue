@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .category-panel {
   height: 76px;
-  width: 800px;
+  width: auto;
   overflow: hidden;
   background-color: white;
   word-wrap: break-word;
