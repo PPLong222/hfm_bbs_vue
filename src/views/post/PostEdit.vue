@@ -41,7 +41,6 @@ export default {
   data() {
     return {
       visible: false,
-      obejctData: {},
       postVisible: false,
       ruleForm: {
         id: '',

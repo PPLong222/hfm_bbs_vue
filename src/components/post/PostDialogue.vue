@@ -10,33 +10,36 @@
         type="success">
     </el-alert>
     <div class="spacing">
-      <el-upload
-          :before-upload="beforeAvatarUpload"
-          :on-success="handleAvatarSuccess"
-          :show-file-list="false"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          class="avatar-uploader"
-          style="width:25%;float:left;">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-      <el-input
-          v-model="description"
-          :rows="8"
-          placeholder="摘要(必填）：会在推荐、列表等场景外露，帮助读者快速了解内容，不超过256字"
-          style="width:75%;float:left;"
-          type="textarea">
-      </el-input>
+      <!--      <el-upload-->
+      <!--          :before-upload="beforeAvatarUpload"-->
+      <!--          :on-success="handleAvatarSuccess"-->
+      <!--          :show-file-list="false"-->
+      <!--          action="https://jsonplaceholder.typicode.com/posts/"-->
+      <!--          class="avatar-uploader"-->
+      <!--          style="width:30%;float:left;">-->
+      <!--        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
+      <!--        <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+      <!--      </el-upload>-->
+      <div class="m-upload">
+        <Cropper></Cropper>
+        <el-input
+            v-model="description"
+            :rows="7"
+            placeholder="摘要(必填）：会在推荐、列表等场景外露，帮助读者快速了解内容，不超过256字"
+            style="margin-left: 20px"
+            type="textarea">
+        </el-input>
+      </div>
     </div>
 
 
-    <div>
+    <div class="spacing">
       请选择文章标签：
       <el-tag
+          type="success"
           v-for="tag in dynamicTags"
           :key="tag"
           :disable-transitions="false"
-          class="spacing"
           closable
           @close="handleClose(tag)">
         {{ tag }}
@@ -55,13 +58,12 @@
     </div>
 
     <div class="spacing">
-
-      <span style="float: left">请选择语言领域：</span>
+      请选择语言领域：
       <el-tag
+          type="warning"
           v-for="language in checkedLanguages"
           :key="language"
           :disable-transitions="false"
-          class="spacing"
           closable
           @close="handleCloseLanguage(language)">
         {{ language }}
@@ -98,12 +100,12 @@
     </div>
 
     <div class="spacing">
-      <span style="float: left">请选择文章分类：</span>
+      请选择文章分类：
       <el-tag
+          type="danger"
           v-for="category in checkedCategories"
           :key="category"
           :disable-transitions="false"
-          class="spacing"
           closable
           @close="handleCloseLanguage(category)">
         {{ category }}
@@ -165,11 +167,14 @@
 </template>
 
 <script>
+import Cropper from "@/components/post/Cropper";
+
 const categoryOptions = ['前端', '后端', '数据库', '操作系统', '网络', '游戏', '人工智能', '大数据', '嵌入式', '小程序', '软件测试'];
 const languageOptions = ['C', 'C++', 'Java', 'Python', 'Javascript', 'HTML', 'CSS', 'csharp', 'rust',
   'Go', 'Android', 'kotlin', 'swift', 'ios', 'dart'];
 
 export default {
+  components: {Cropper},
   data() {
     return {
       visible: false,//操纵父子组件显示
@@ -183,9 +188,9 @@ export default {
       languageValue: '',
       categoryValue: '',
 
-      checkedCategories: ['前端', '后端'],
-      checkedLanguages: ['Java', 'C++'],
-      dynamicTags: ['标签一', '标签二', '标签三'],//用来存储标签数
+      checkedCategories: [],
+      checkedLanguages: [],
+      dynamicTags: [],//用来存储标签数
 
       categories: categoryOptions,
       languages: languageOptions,
@@ -218,7 +223,7 @@ export default {
     },
     beforeAvatarUpload(file) {
       const isJPG = (file.type === 'image/jpeg') || (file.type === 'image/png');
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt2M = file.size / 1024 / 1024 < 20;
 
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 或 png 格式!');
@@ -366,5 +371,10 @@ export default {
   margin-top: 30px;
 }
 
+.m-upload {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap
+}
 
 </style>
