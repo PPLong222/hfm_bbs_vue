@@ -23,6 +23,15 @@
       </div>
     </div>
     <h1>hello</h1>
+    <!--test-->
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <!--回到顶部的组件-->
+    <go-top></go-top>
   </div>
 </template>
 
@@ -30,13 +39,15 @@
 import CategoryPanel from "@/components/page/CategoryPanel";
 import HotPostPanel from "@/components/page/HotPostPanel";
 import SinglePostView from "@/components/page/SinglePostView";
+import GoTop from "@/components/gotop/GoTop";
 
 export default {
   name: "IndexView",
   components: {
     CategoryPanel,
     HotPostPanel,
-    SinglePostView
+    SinglePostView,
+    "go-top": GoTop
   },
   data() {
     return {
