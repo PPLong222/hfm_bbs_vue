@@ -1,22 +1,23 @@
 <template>
   <div class="post-container">
-    <h1 class="post-title">{{ postData.title }}</h1>
+    <h1 class="post-title">{{ recommendPost.title }}</h1>
     <div class="post-description">
-      <img :src=postData.cover alt="" class="post-cover"/>
-      <span class="post-pretext">{{ postData.content }}</span>
+      <img alt="" class="post-cover" src="http://www.pplong.top/gallery/covers/wallhaven-z85wpg.png"/>
+      <span class="post-pretext">{{ recommendPost.description }}</span>
     </div>
     <div class="post-tail">
       <span class="iconfont icon-heart"></span>
-      <span class="icon-text">{{ postData.star }} 赞</span>
+      <span class="icon-text">{{ recommendPost.stars }} 赞</span>
 
       <span class="iconfont icon-comment icon-next"></span>
-      <span class="icon-text">{{ postData.remark }} 赞 条评论</span>
+      <span class="icon-text">{{ recommendPost.commentCount }} 赞 条评论</span>
 
       <span class="iconfont icon-star icon-next"></span>
-      <span class="icon-text">{{ postData.favorite }} 收藏</span>
+      <span class="icon-text">{{ recommendPost.favoriteCount }} 收藏</span>
 
-      <span class="post-author-text">作者: {{ postData.author }}</span>
+      <span class="post-author-text">作者: {{ recommendPost.author.nickName }}</span>
     </div>
+
   </div>
 </template>
 
@@ -24,7 +25,7 @@
 export default {
   name: "SinglePostView",
   props: {
-    postData: Object
+    recommendPost: Object
   }
 }
 </script>
@@ -33,10 +34,12 @@ export default {
 @import "../../assets/css/iconfont/iconfont.css";
 
 .post-container {
-  height: 240px;
+  height: fit-content;
+  max-height: 280px;
   width: auto;
-  padding: 20px 10px 10px 10px;
-  background-color: red;
+  margin: 20px 10px 10px 10px;
+  background-color: white;
+  border-bottom: 2px solid #8c8c93;
 }
 
 h1 {
@@ -90,5 +93,17 @@ h1 {
 
 .post-author-text {
   margin-left: 30px;
+}
+
+.post-title {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  overflow: hidden;
+  height: fit-content;
+  font-size: 20px;
+  font-weight: 700;
 }
 </style>

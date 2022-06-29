@@ -16,7 +16,6 @@
 </template>
 
 <script>
-let category_panel = document.getElementById("category-panel")
 export default {
   name: "CategoryPanel"
 }
@@ -25,7 +24,7 @@ export default {
 <style scoped>
 .category-panel {
   height: 76px;
-  width: 600px;
+  width: auto;
   overflow: hidden;
   background-color: white;
   word-wrap: break-word;

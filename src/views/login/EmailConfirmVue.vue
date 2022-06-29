@@ -43,9 +43,7 @@ function onConfirmButtonClick() {
   }
   // 进行网络请求
   let email = this.$route.params.email
-  console.log(code)
   confirmCode(email, code).then(res => {
-    console.log(res)
     if (this.utils.isRequestSuccess(res)) {
       // 暂时跳转到登录界面
       this.$router.push("/login")
@@ -61,12 +59,30 @@ $(function () {
   var body = $('body');
 
   function goToNextInput(e) {
-    var t = $(e.target.parentNode),
-        sib = t.next().children();
-    if (!sib || !sib.length) {
-      sib = body.find('.code-input').eq(0);
+    let key = e.which
+    console.log(key)
+    if (key >= 65 && key <= 90) {
+      console.log("1111")
+      let t = $(e.target.parentNode),
+          sib = t.next().children();
+      if (!sib || !sib.length) {
+        sib = body.find('.code-input').eq(0);
+      }
+      sib.select().focus();
+    } else {
+      e.preventDefault();
     }
-    sib.select().focus();
+  }
+
+  function onKeyDown(e) {
+    let key = e.which;
+
+    if (key >= 65 && key <= 90) {
+      return true;
+    }
+
+    e.preventDefault();
+    return false;
   }
 
   function onFocus(e) {
@@ -74,6 +90,7 @@ $(function () {
 
   }
 
+  body.on('keydown', '.code-input', onKeyDown);
   body.on('keyup', '.code-input', goToNextInput);
   body.on('click', '.code-input', onFocus);
 
