@@ -14,3 +14,11 @@ export const confirmCode = (email, code) =>
 
 // 测试文章返回值
 export const getTestPostList = (p) => get("/test/test_post", p)
+
+export const getRecommendPostList = (category, languageField, pageIndex, pageNum) => get("/post/getRecommendPostByPage", {
+    category,
+    languageField,
+    pageIndex,
+    pageNum
+})
+

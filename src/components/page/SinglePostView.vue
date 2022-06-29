@@ -2,7 +2,7 @@
   <div class="post-container">
     <h1 class="post-title">{{ recommendPost.title }}</h1>
     <div class="post-description">
-      <img alt="" class="post-cover" src="http://www.pplong.top/gallery/covers/wallhaven-z85wpg.png"/>
+      <img :src="recommendPost.cover" alt="" class="post-cover"/>
       <span class="post-pretext">{{ recommendPost.description }}</span>
     </div>
     <div class="post-tail">

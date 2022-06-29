@@ -44,8 +44,7 @@
 import CategoryPanel from "@/components/page/CategoryPanel";
 import HotPostPanel from "@/components/page/HotPostPanel";
 import SinglePostView from "@/components/page/SinglePostView";
-import {getTestPostList} from "@/api/api";
-import $ from 'jquery';
+import {getRecommendPostList} from "@/api/api";
 import LanguagePanel from "@/components/page/LanguagePanel";
 import {languages} from "@/utils/utils";
 import Header from "@/components/post/Header";
@@ -101,13 +100,15 @@ export default {
     HotPostPanel,
     SinglePostView
   },
-  beforeCreate() {
+  created() {
     console.log("begin mounted")
-    getTestPostList("").then(res => {
+    console.log(this.curRequestPage)
+    getRecommendPostList(0, 0, this.curRequestPage, 6).then(res => {
       console.log(res)
       for (let i in res.data) {
         this.recommendPostList.push(res.data[i])
       }
+      this.curRequestPage += 1;
     }).catch(err => {
       console.log(err)
     })
@@ -117,26 +118,41 @@ export default {
     let vue = this
     //下面我们需要一个监听滚动条的事件
     window.onscroll = function () {
-//当滚动条移动马上就出发我们上面定义的事件触发函数,但是我们要求的是滚动条到底后才触发,所以自然这个触发事件里面需要逻辑控制一下.
-      console.log(getWindowHeight() + getDocumentTop())
-      if (getScrollHeight() - 100 <= getWindowHeight() + getDocumentTop()) {
-        // 在这里执行加载文章页面的方法, 后续会改变
-        $('.loading-gif').css('display', 'block')
-        getTestPostList("").then(res => {
-          console.log(res)
-          for (let i in res.data) {
-            vue.recommendPostList.push(res.data[i])
+      if (!vue.isRequestEnd) {
+        // 当滚动条移动马上就出发我们上面定义的事件触发函数,但是我们要求的是滚动条到底后才触发,所以自然这个触发事件里面需要逻辑控制一下.
+        if (getScrollHeight() - 100 <= getWindowHeight() + getDocumentTop()) {
+          // $('.loading-gif').css('display', 'block')
+          // 请求一次后还没收到结果就不能再次请求
+          if (!vue.isInRequest) {
+            vue.isInRequest = true
+            getRecommendPostList(0, 0, vue.curRequestPage, 6).then(res => {
+              console.log(res)
+              // 如果没有数据了
+              if (res.data == null || res.data.length < 1) {
+                vue.isRequestEnd = true
+              } else {
+                for (let i in res.data) {
+                  vue.recommendPostList.push(res.data[i])
+                }
+                vue.curRequestPage += 1;
+              }
+              vue.isInRequest = false
+            }).catch(err => {
+              console.log(err)
+            })
           }
-        }).catch(err => {
-          console.log(err)
-        })
+
+        }
       }
     }
   },
   data() {
     return {
       recommendPostList: [],
-      languages: languages
+      languages: languages,
+      curRequestPage: 1,
+      isRequestEnd: false,
+      isInRequest: false
     }
   },
   methods: {
