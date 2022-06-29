@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--    这里引入导航栏模块, 替换掉div-->
-    <div style="height: 60px;width: 100%; background-color: gray"></div>
+    <Header></Header>
     <div class="content-body">
       <div class="content-left">
         <category-panel class="category-panel"></category-panel>
@@ -48,6 +48,7 @@ import {getTestPostList} from "@/api/api";
 import $ from 'jquery';
 import LanguagePanel from "@/components/page/LanguagePanel";
 import {languages} from "@/utils/utils";
+import Header from "@/components/post/Header";
 
 //文档高度
 function getDocumentTop() {
@@ -94,6 +95,7 @@ function getScrollHeight() {
 export default {
   name: "IndexView",
   components: {
+    Header,
     LanguagePanel,
     CategoryPanel,
     HotPostPanel,
@@ -159,7 +161,6 @@ export default {
 }
 
 .content-right {
-  background-color: #135dd0;
   height: 700px;
   width: 380px;
   float: right;
@@ -194,9 +195,11 @@ export default {
   background-color: white;
   height: auto;
   width: auto;
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 10px 10px 20px 20px;
   margin-bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 5px 15px;
+
 }
 
 .right-float-subject-title {
@@ -227,5 +230,11 @@ export default {
 
 body {
   background-color: #f6f6f6;
+}
+
+.main-content {
+  height: fit-content;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 5px 15px;
+  border-radius: 4px;
 }
 </style>

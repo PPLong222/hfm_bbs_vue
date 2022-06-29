@@ -31,13 +31,12 @@ export default {
   transition-duration: 0.3s;
   padding: 1px;
   border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 5px 15px;
 }
 
 .category-item {
   line-height: 30px;
-  font-size: 16px;
-  border-radius: 16px;
-  border: 1px solid red;
+  font-size: 18px;
   padding: 4px 8px 4px 8px;
   margin: 20px 10px 0 10px;
   height: 30px;
@@ -50,7 +49,4 @@ export default {
   height: 140px;
 }
 
-ul {
-  list-style: none;
-}
 </style>
