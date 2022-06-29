@@ -5,7 +5,6 @@ import router from './router'
 // 引入工具类
 import ElementUI from 'element-ui'
 import utils from '@/utils/utils'
-import axios from 'axios'
 import mavonEditor from 'mavon-editor'
 import VueCropper from 'vue-cropper'
 //import "./axios"
@@ -22,7 +21,6 @@ Vue.use(VueCropper)
 
 Vue.config.productionTip = false
 Vue.prototype.utils = utils
-Vue.prototype.$axios = axios;
 
 new Vue({
   router,
