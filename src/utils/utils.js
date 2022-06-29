@@ -36,6 +36,21 @@ export default {
             }
         });
         return res
-    }
+    },
 
+}
+
+export const languages = {
+    "Java": 70,
+    "C": 70,
+    "C++": 60,
+    "Python": 50,
+    "Go": 50,
+    "C#": 50,
+    "SQL": 50,
+    "Rust": 50,
+    "JavaScript": 50,
+    "Android": 50,
+    "Dart": 50,
+    "Kotlin": 50
 }

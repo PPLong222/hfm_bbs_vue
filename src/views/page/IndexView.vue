@@ -30,6 +30,11 @@
           <div class="right-float-subject-title">网站公告</div>
           <div class="right-float-subject-content">这是网站内容</div>
         </div>
+
+        <div class="right-normal-panel">
+          <div class="right-float-subject-title">语言领域</div>
+          <language-panel :languages="languages"></language-panel>
+        </div>
       </div>
     </div>
   </div>
@@ -41,6 +46,8 @@ import HotPostPanel from "@/components/page/HotPostPanel";
 import SinglePostView from "@/components/page/SinglePostView";
 import {getTestPostList} from "@/api/api";
 import $ from 'jquery';
+import LanguagePanel from "@/components/page/LanguagePanel";
+import {languages} from "@/utils/utils";
 
 //文档高度
 function getDocumentTop() {
@@ -87,6 +94,7 @@ function getScrollHeight() {
 export default {
   name: "IndexView",
   components: {
+    LanguagePanel,
     CategoryPanel,
     HotPostPanel,
     SinglePostView
@@ -125,13 +133,11 @@ export default {
   },
   data() {
     return {
-      recommendPostList: []
+      recommendPostList: [],
+      languages: languages
     }
   },
   methods: {
-    logList() {
-      console.log(this.recommendPostList)
-    }
   }
 }
 </script>
