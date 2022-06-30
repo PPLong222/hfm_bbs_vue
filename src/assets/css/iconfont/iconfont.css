@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3478114 */
-  src: url('iconfont.woff2?t=1656331380215') format('woff2'),
-  url('iconfont.woff?t=1656331380215') format('woff'),
-  url('iconfont.ttf?t=1656331380215') format('truetype');
+  src: url('iconfont.woff2?t=1656477990995') format('woff2'),
+  url('iconfont.woff?t=1656477990995') format('woff'),
+  url('iconfont.ttf?t=1656477990995') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,22 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-redian:before {
+  content: "\e62c";
+}
+
+.icon-ef-redian-gongju:before {
+  content: "\e629";
+}
+
+.icon-newspaper-full:before {
+  content: "\e891";
+}
+
+.icon-toutiao:before {
+  content: "\fb21";
 }
 
 .icon-star:before {

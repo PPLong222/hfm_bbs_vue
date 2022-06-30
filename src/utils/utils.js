@@ -5,19 +5,19 @@ export default {
         }
         return false;
     },
-    getCookieByName(name) {
-        let cookies = unescape(document.cookie).split(";")
-        console.log(cookies)
-        for (let i = 0; i < cookies.length; i++) {
-            let obj = cookies[i].split("=")
-            if (obj[0] === name) {
-                return obj[1];
-            }
-        }
-        return null
-    },
     clearCookieByName(name) {
         document.cookie = name + "=";
+    },
+    getCookieByName(name) {
+        let cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            let obj = cookies[i].split("=");
+            console.log(obj[1])
+            // trim剔除多余的空格
+            if (obj[0].trim() === name) {
+                return obj[1]
+            }
+        }
     },
     isNullOrNil(str) {
         if (str == null || str.length < 1) {
@@ -36,6 +36,28 @@ export default {
             }
         });
         return res
+    },
+    generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 
+}
+
+export const languages = {
+    "Java": 70,
+    "C": 70,
+    "C++": 60,
+    "Python": 50,
+    "Go": 50,
+    "C#": 50,
+    "SQL": 50,
+    "Rust": 50,
+    "JavaScript": 50,
+    "Android": 50,
+    "Dart": 50,
+    "Kotlin": 50
 }
