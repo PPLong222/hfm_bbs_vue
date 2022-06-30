@@ -12,6 +12,9 @@ export const signup = (userName, email, password) =>
 export const confirmCode = (email, code) =>
     post("/signup/confirm", {email, code})
 
+export const submitPostInfo = (postInfo) =>
+    post("/post/edit", postInfo)
+
 // 测试文章返回值
 export const getTestPostList = (p) => get("/test/test_post", p)
 
