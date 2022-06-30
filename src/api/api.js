@@ -22,3 +22,10 @@ export const getRecommendPostList = (category, languageField, pageIndex, pageNum
     pageNum
 })
 
+export const getHotPostList = (category, languageField, pageIndex, pageNum) => get("/post/getTopPostByPage", {
+    category,
+    languageField,
+    pageIndex,
+    pageNum
+})
+
