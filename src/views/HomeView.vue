@@ -7,10 +7,12 @@
     </span>
     <el-upload
         :before-upload="beforeAvatarUpload"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        :http-request="httpRequest"
         :on-success="handleAvatarSuccess"
         :show-file-list="false"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        class="avatar-uploader">
+        class="avatar-uploader"
+    >
       <img v-if="imageUrl" :src="imageUrl" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
@@ -31,15 +33,7 @@ export default {
   },
   methods: {
     testString() {
-      uploadSimpleImage(this.file, (err, data) => {
-        if (err) {
-          console.log(err)
 
-        }
-        if (data) {
-          console.log(data)
-        }
-      })
     },
     handleAvatarSuccess(res, file) {
       console.log(file.raw)
@@ -58,13 +52,28 @@ export default {
         this.$message.error('上传头像图片大小不能超过 5MB!');
       }
       return (isJPG || isPNG) && isLt5M;
+    },
+    httpRequest(file) {
+      this.file = file.file
+      uploadSimpleImage(this.file, (err, data) => {
+        if (err) {
+          console.log(err)
+        }
+        if (data) {
+          this.imageUrl = "https:// " + data.Location
+          console.log(data)
+        }
+      })
     }
   },
   data() {
     return {
       msg: "PPLong VUE",
       imageUrl: '',
-      file: Object
+      file: Object,
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      }
     }
   }
 }
