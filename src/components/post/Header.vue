@@ -62,6 +62,7 @@ export default {
   name: "Header",
   data() {
     return {
+      input: '',
       user: {
         username: '请先登录',
         avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
@@ -83,11 +84,11 @@ export default {
     }
   },
   created() {
-    if (this.$store.getters.getUser.username) {
-      this.user.username = this.$store.getters.getUser.username;
-      this.user.avatar = this.$store.getters.getUser.avatar;
-      this.hasLogin = true
-    }
+    // if (this.$store.getters.getUser.username) {
+    //   this.user.username = this.$store.getters.getUser.username;
+    //   this.user.avatar = this.$store.getters.getUser.avatar;
+    //   this.hasLogin = true
+    // }
   }
 }
 

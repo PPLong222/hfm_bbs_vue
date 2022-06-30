@@ -101,7 +101,9 @@ export default {
         enlarge: 0.1 //图片根据截图框输出比例倍数
       },
       // 防止重复提交
-      loading: false
+      loading: false,
+      //用于存储图片的url
+      url: '我是子组件的url'
     }
   },
   methods: {
@@ -173,11 +175,17 @@ export default {
         this.previewImg = URL.createObjectURL(blob)
         this.isPreview = true
       })
+      this.emitCoverUrl();
       // 获取截图的 base64 数据
       // this.$refs.cropper.getCropData(data => {
       //     console.log(data)
       // })
     },
+
+    //向父组件传递图片url
+    emitCoverUrl() {
+      this.$emit("emitUrl", this.url)
+    }
   }
 }
 </script>
