@@ -14,8 +14,12 @@
             <a class="select-text" index="2" @click="onSelectMenuClick($event)">热榜</a>
           </div>
           <div class="post-list">
-            <single-post-view v-for="post of curPostList" v-bind:key="post.id"
+            <single-post-view v-for="post of curPostList" v-if="curIndex===1" v-bind:key="post.id"
                               :post="post"></single-post-view>
+          </div>
+          <div v-if="curIndex===2" class="post-list">
+            <top-post-list-panel v-for="post in curPostList" v-bind:key="post.id" :index="curPostList.indexOf(post)"
+                                 :post="post"></top-post-list-panel>
           </div>
           <!--          加载框  暂时不要-->
           <!--          <img :src="require('@/assets/images/loading.gif')" v-if="!isInRequest" class="loading-gif" alt=""/>-->
@@ -50,6 +54,7 @@ import {getHotPostList, getRecommendPostList} from "@/api/api";
 import LanguagePanel from "@/components/page/LanguagePanel";
 import {languages} from "@/utils/utils";
 import Header from "@/components/post/Header";
+import TopPostListPanel from "@/components/page/TopPostListPanel";
 
 //文档高度
 function getDocumentTop() {
@@ -96,6 +101,7 @@ function getScrollHeight() {
 export default {
   name: "IndexView",
   components: {
+    TopPostListPanel,
     Header,
     LanguagePanel,
     CategoryPanel,

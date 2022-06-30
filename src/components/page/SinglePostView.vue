@@ -5,7 +5,10 @@
     </a>
     <div class="post-description">
       <a :href="post.url" target="_blank">
-        <img :src="post.cover" alt="" class="post-cover"/>
+        <el-image :fit="cover" :src="post.cover" alt="" class="post-cover" lazy>
+          <el-image slot="placeholder" :src="require('@/assets/images/image_loading.gif')" class="image-slot">
+          </el-image>
+        </el-image>
       </a>
       <a :href="post.url" target="_blank">
         <span class="post-pretext">{{ post.description }}</span>
