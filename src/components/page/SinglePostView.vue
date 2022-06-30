@@ -1,21 +1,27 @@
 <template>
   <div class="post-container">
-    <h1 class="post-title">{{ recommendPost.title }}</h1>
+    <a :href="post.url" target="_blank">
+      <div class="post-title">{{ post.title }}</div>
+    </a>
     <div class="post-description">
-      <img :src="recommendPost.cover" alt="" class="post-cover"/>
-      <span class="post-pretext">{{ recommendPost.description }}</span>
+      <a :href="post.url" target="_blank">
+        <img :src="post.cover" alt="" class="post-cover"/>
+      </a>
+      <a :href="post.url" target="_blank">
+        <span class="post-pretext">{{ post.description }}</span>
+      </a>
     </div>
     <div class="post-tail">
       <span class="iconfont icon-heart"></span>
-      <span class="icon-text">{{ recommendPost.stars }} 赞</span>
+      <span class="icon-text">{{ post.stars }} 赞</span>
 
       <span class="iconfont icon-comment icon-next"></span>
-      <span class="icon-text">{{ recommendPost.commentCount }} 赞 条评论</span>
+      <span class="icon-text">{{ post.commentCount }} 赞 条评论</span>
 
       <span class="iconfont icon-star icon-next"></span>
-      <span class="icon-text">{{ recommendPost.favoriteCount }} 收藏</span>
+      <span class="icon-text">{{ post.favoriteCount }} 收藏</span>
 
-      <span class="post-author-text">作者: {{ recommendPost.author.nickName }}</span>
+      <span class="post-author-text">作者: {{ post.author.nickName }}</span>
     </div>
 
   </div>
@@ -25,7 +31,7 @@
 export default {
   name: "SinglePostView",
   props: {
-    recommendPost: Object
+    post: Object
   }
 }
 </script>
@@ -37,15 +43,9 @@ export default {
   height: fit-content;
   max-height: 280px;
   width: auto;
-  margin: 20px 10px 10px 10px;
+  padding: 20px 10px 10px 20px;
   background-color: white;
-  border-bottom: 2px solid #8c8c93;
-}
-
-h1 {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0 0 10px 0;
+  border-bottom: 2px solid #f6f6f6;
 }
 
 .post-description {
@@ -64,12 +64,12 @@ h1 {
   text-overflow: clip;
   overflow: hidden;
   height: 160px;
-  width: 480px;
+  width: 560px;
   display: inline-block;
   margin-left: 20px;
   font-size: 20px;
   word-wrap: normal;
-  word-break: normal;
+  word-break: break-all;
   white-space: normal;
 }
 
@@ -104,6 +104,11 @@ h1 {
   overflow: hidden;
   height: fit-content;
   font-size: 20px;
-  font-weight: 700;
+  margin: 0 0 10px 4px;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
 }
 </style>

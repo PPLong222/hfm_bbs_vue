@@ -137,5 +137,7 @@ export default {
 
 .hot-text.toutiao {
   color: rgba(227, 60, 60, 0.73);
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 </style>
