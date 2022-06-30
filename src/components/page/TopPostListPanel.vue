@@ -94,7 +94,7 @@ export default {
 }
 
 .post-cover-img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
   border-radius: 4px;
 }

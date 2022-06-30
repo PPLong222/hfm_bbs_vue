@@ -21,8 +21,7 @@
             <top-post-list-panel v-for="post in curPostList" v-bind:key="post.id" :index="curPostList.indexOf(post)"
                                  :post="post"></top-post-list-panel>
           </div>
-          <!--          加载框  暂时不要-->
-          <!--          <img :src="require('@/assets/images/loading.gif')" v-if="!isInRequest" class="loading-gif" alt=""/>-->
+          <el-image v-if="!isRequestEnd" :src="require('@/assets/images/loading.gif')" alt="" class="loading-gif"/>
         </div>
         <div v-if="isRequestEnd" class="post-end-text">已经到底了</div>
 
@@ -173,29 +172,27 @@ export default {
       console.log("changeWindowScroll")
       let vue = this
       window.onscroll = function () {
-        if (!vue.isRequestEnd) {
+        if (!vue.isRequestEnd && !vue.isInRequest) {
           // 当滚动条移动马上就出发我们上面定义的事件触发函数,但是我们要求的是滚动条到底后才触发,所以自然这个触发事件里面需要逻辑控制一下.
           if (getScrollHeight() - 30 <= getWindowHeight() + getDocumentTop()) {
             // 请求一次后还没收到结果就不能再次请求
-            if (!vue.isInRequest) {
-              vue.isInRequest = true
-              console.log(vue.curRequestPage)
-              func(0, 0, vue.curRequestPage, 6).then(res => {
-                console.log(res)
-                // 如果没有数据了
-                if (res.data == null || res.data.length < 1) {
-                  vue.isRequestEnd = true
-                } else {
-                  for (let i in res.data) {
-                    vue.curPostList.push(res.data[i])
-                  }
-                  vue.curRequestPage += 1;
+            vue.isInRequest = true
+            func(0, 0, vue.curRequestPage, 6).then(res => {
+              console.log(res)
+              // 如果没有数据了
+              if (res.data == null || res.data.length < 1) {
+                vue.isRequestEnd = true
+              } else {
+                for (let i in res.data) {
+                  vue.curPostList.push(res.data[i])
                 }
-                vue.isInRequest = false
-              }).catch(err => {
-                console.log(err)
-              })
-            }
+                vue.curRequestPage += 1;
+              }
+              vue.isInRequest = false
+            }).catch(err => {
+              console.log(err)
+              vue.isInRequest = false
+            })
 
           }
         }
@@ -295,8 +292,8 @@ export default {
 .loading-gif {
   margin: 10px auto;
   height: 100px;
-  display: none;
   width: 100px;
+  display: block;
 }
 
 body {
