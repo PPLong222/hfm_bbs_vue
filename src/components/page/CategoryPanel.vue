@@ -45,6 +45,10 @@ export default {
   color: #8c8c93;
 }
 
+.category-item:hover {
+  color: #0066ff;
+}
+
 .category-panel:hover {
   height: 140px;
 }
