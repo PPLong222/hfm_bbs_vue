@@ -59,7 +59,7 @@
     }
 
     .me-to-top i {
-      color: #00d1b2;
+      color: #0066ff;
       display: block;
       line-height: 40px;
       text-align: center;

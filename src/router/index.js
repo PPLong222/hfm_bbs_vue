@@ -60,11 +60,6 @@ const routes = [
     component: PostEdit
   },
   {
-    path: '/post/:postId',
-    name: 'PostDetail',
-    component: PostDetail
-  },
-  {
     path: '/post/:postId/edit',
     name: 'PostEdit',
     // meta: {
@@ -72,6 +67,10 @@ const routes = [
     // },
     component: PostEdit
   },
+  {
+    path: '/post/view/:id',
+    component: PostDetail
+  }
 ]
 
 const router = new VueRouter({
