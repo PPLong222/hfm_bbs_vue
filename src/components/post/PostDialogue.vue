@@ -4,6 +4,7 @@
       :visible.sync="visible"
       center
       title="博文提交"
+      class="m-dialogue"
       width="50%">
     <el-alert
         title="请勿发布涉及政治、广告、营销、翻墙、违反国家法律法规等内容,详见《ECHO社区内容创作规范》"
@@ -499,6 +500,10 @@ export default {
 </script>
 
 <style scoped>
+.m-dialogue {
+  min-width: 650px;
+}
+
 /*tag增加样式*/
 .el-tag + .el-tag {
   margin-left: 10px;

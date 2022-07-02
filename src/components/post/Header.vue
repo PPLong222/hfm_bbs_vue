@@ -1,8 +1,8 @@
 <template>
   <div class="m-content">
     <!--    <h3>欢迎来到您的博客</h3>-->
-    <div style="float: left">
-      <span class="aspect"><el-link href="/posts"><h2 style="color: #06f;margin-left: 50px">主页</h2></el-link></span>
+    <div style="float: left;margin-left: 5%">
+      <span class="aspect"><el-link href="/posts"><h2 style="color: #06f">主页</h2></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>下载·课程</h3></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>学习</h3></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>社区</h3></el-link></span>
@@ -111,7 +111,7 @@ export default {
 }
 
 .m-action {
-  margin-right: 60px;
+  margin-right: 30px;
   margin-top: 20px;
   float: right;
 }
@@ -119,7 +119,7 @@ export default {
 .dropdown_style {
   float: right;
   margin-top: 16px;
-  margin-right: 30px;
+  margin-right: 5%;
 }
 
 .el-icon-style {
@@ -142,9 +142,10 @@ export default {
 
 /*搜索框*/
 .search {
-  width: 340px;
+  /*width: 340px;*/
   float: right;
-  margin-right: 100px;
+  margin-right: 2%;
+  margin-left: 2%;
   margin-top: 20px;
 }
 
@@ -174,7 +175,7 @@ export default {
 }
 
 /deep/ .el-input__inner:focus {
-  width: 320px;
+  width: 340px;
   border-left: 2px solid #06f;
   border-top: 2px solid #06f;
   border-bottom: 2px solid #06f;
