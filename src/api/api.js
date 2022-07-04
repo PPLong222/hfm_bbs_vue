@@ -1,4 +1,5 @@
 import {get, post} from './request'
+import request from "./request";
 
 export const test = p => get("/test", p)
 

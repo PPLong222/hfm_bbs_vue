@@ -1,7 +1,11 @@
 <template>
   <div>
     <Header></Header>
-    <div class="me-view-body" v-title :data-title="title">
+<!--    <div class="img-wrapper">-->
+<!--    -->
+<!--    </div>-->
+    <el-image class="post-cover" :src="post.cover"></el-image>
+    <div class="me-view-body" :data-title="title">
       <el-container class="me-view-container">
         <!--<el-aside class="me-area">-->
         <!--<ul class="me-operation-list">-->
@@ -67,7 +71,7 @@
                 <el-row :gutter="20">
                   <el-col :span="2">
                     <a class="">
-                      <img class="me-view-picture" :src="avatar"></img>
+                      <el-image class="me-view-picture" :src="comAvatar"></el-image>
                     </a>
                   </el-col>
                   <el-col :span="22">
@@ -110,14 +114,6 @@
 
       </el-container>
     </div>
-    <!--test-->
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <!--回到顶部的组件-->
     <go-top></go-top>
   </div>
 </template>
@@ -153,6 +149,7 @@ export default {
         category:{},
         createTime: '',
         content: '',
+        cover: '',
         editor: {
           value: '',
           toolbarsFlag: false,
@@ -163,19 +160,19 @@ export default {
       comments: [],
       comment: {
         post: {},
-        content: ''
+        content: '',
       },
       avatar: '',
-      default_avatar: "E:\vue_workspace\HFM-BBS\hfm_bbs_vue\src\assets\icon\icon_github.png"
+      default_avatar: require('@/assets/icon/icon_github.png')
     }
   },
   computed: {
-    avatar() {
-      let avatar = this.$store.state.avatar
-
-      if (avatar.length > 0) {
-        return avatar
-      }
+    comAvatar() {
+      // let avatar = this.$store.state.avatar
+      //
+      // if (avatar.length > 0) {
+      //   return avatar
+      // }
       return this.default_avatar
     },
     title() {
@@ -282,10 +279,10 @@ export default {
 
 <style scoped>
 .me-view-body {
-  width: 800px;
+  width: 1000px;
   min-height: 100%;
   position: relative;
-  margin: 100px auto 140px;
+  margin: 20px auto 140px;
   font-weight: 400;
   font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",Arial,sans-serif;
   line-height: 1.5;
@@ -306,7 +303,7 @@ export default {
   flex: 1;
   box-sizing: border-box;
   min-width: 0;
-  width: 800px;
+  width: 1000px;
 }
 
 .el-main {
@@ -388,4 +385,20 @@ export default {
 .v-note-wrapper .v-note-panel .v-note-show .v-show-content, .v-note-wrapper .v-note-panel .v-note-show .v-show-content-html {
   background: #fff !important;
 }
+
+.post-cover {
+  width: 1000px;
+  height: 600px;
+  /*min-width: 1356px;*/
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  display: block;
+}
+
+.img-wrapper{
+  width: 80%;
+  height: 500px;
+  margin: 0 auto;
+}
+
 </style>

@@ -106,23 +106,23 @@ export default {
         return;
       }
 
-      // publishComment(that.reply,this.$store.state.token).then(data => {
-      //   if(data.success){
-      //     that.$message({type: 'success', message: '评论成功', showClose: true})
-      //     if(!that.comment.childrens){
-      //       that.comment.childrens = []
-      //     }
-      //     that.comment.childrens.unshift(data.data)
-      //     that.$emit('commentCountsIncrement')
-      //     that.showComment(that.commentShowIndex)
-      //   }else{
-      //     that.$message({type: 'error', message: data.msg, showClose: true})
-      //   }
-      // }).catch(error => {
-      //   if (error !== 'error') {
-      //     that.$message({type: 'error', message: '评论失败', showClose: true})
-      //   }
-      // })
+      publishComment(that.reply,this.$store.state.token).then(data => {
+        if(data.success){
+          that.$message({type: 'success', message: '评论成功', showClose: true})
+          if(!that.comment.childrens){
+            that.comment.childrens = []
+          }
+          that.comment.childrens.unshift(data.data)
+          that.$emit('commentCountsIncrement')
+          that.showComment(that.commentShowIndex)
+        }else{
+          that.$message({type: 'error', message: data.msg, showClose: true})
+        }
+      }).catch(error => {
+        if (error !== 'error') {
+          that.$message({type: 'error', message: '评论失败', showClose: true})
+        }
+      })
 
     },
     getEmptyReply() {
@@ -214,5 +214,14 @@ export default {
 
 .me-reply-user {
   color: #78b6f7;
+}
+
+.me-view-picture {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  vertical-align: middle;
+  background-color: #0066ff;
 }
 </style>

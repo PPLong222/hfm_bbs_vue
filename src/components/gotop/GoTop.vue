@@ -49,9 +49,9 @@
       position: fixed;
       right: 100px;
       bottom: 150px;
-      width: 40px;
-      height: 40px;
-      border-radius: 20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 40px;
       cursor: pointer;
       transition: .3s;
       box-shadow: 0 0 6px rgba(0, 0, 0, .12);
@@ -61,9 +61,9 @@
     .me-to-top i {
       color: #0066ff;
       display: block;
-      line-height: 40px;
+      line-height: 80px;
       text-align: center;
-      font-size: 18px;
+      font-size: 40px;
     }
 
 </style>
