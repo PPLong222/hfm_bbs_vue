@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PostEdit from "@/views/post/PostEdit";
-import PostDetail from "@/views/post/PostDetail";
 
 Vue.use(VueRouter)
 

@@ -13,8 +13,11 @@ export const signup = (userName, email, password) =>
 export const confirmCode = (email, code) =>
     post("/signup/confirm", {email, code})
 
-export const submitPostInfo = (postInfo) =>
-    post("/post/edit", postInfo)
+export const submitPostInfo = (postInfo, tags) =>
+    post("/post/edit", {postInfo, tags})
+
+export const showPostEdit = (postId) =>
+    get("/post/" + postId, {postId})
 
 // 测试文章返回值
 export const getTestPostList = (p) => get("/test/test_post", p)

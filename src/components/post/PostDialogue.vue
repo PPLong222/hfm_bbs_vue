@@ -4,26 +4,17 @@
       :visible.sync="visible"
       center
       title="博文提交"
+      class="m-dialogue"
       width="50%">
     <el-alert
         title="请勿发布涉及政治、广告、营销、翻墙、违反国家法律法规等内容,详见《ECHO社区内容创作规范》"
         type="success">
     </el-alert>
     <div class="spacing">
-      <!--      <el-upload-->
-      <!--          :before-upload="beforeAvatarUpload"-->
-      <!--          :on-success="handleAvatarSuccess"-->
-      <!--          :show-file-list="false"-->
-      <!--          action="https://jsonplaceholder.typicode.com/posts/"-->
-      <!--          class="avatar-uploader"-->
-      <!--          style="width:30%;float:left;">-->
-      <!--        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-      <!--        <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
-      <!--      </el-upload>-->
       <div class="m-upload">
-        <Cropper @emitUrl="getCoverUrl"></Cropper>
+        <Cropper @emitCover="getCoverUrl"></Cropper>
         <el-input
-            v-model="description"
+            v-model="postDescription"
             :rows="7"
             placeholder="摘要(必填）：会在推荐、列表等场景外露，帮助读者快速了解内容，不超过256字"
             style="margin-left: 20px"
@@ -68,18 +59,18 @@
           @close="handleCloseLanguage(language)">
         {{ language }}
       </el-tag>
-      <el-input
-          v-if="languageVisible"
-          ref="saveLanguageInput"
-          v-model="languageValue"
-          class="input-new-tag"
-          size="small"
-          @blur="handleInputConfirmLanguage"
-          @keyup.enter.native="handleInputConfirmLanguage"
-      >
-      </el-input>
+      <!--      <el-input-->
+      <!--          v-if="languageVisible"-->
+      <!--          ref="saveLanguageInput"-->
+      <!--          v-model="languageValue"-->
+      <!--          class="input-new-tag"-->
+      <!--          size="small"-->
+      <!--          @blur="handleInputConfirmLanguage"-->
+      <!--          @keyup.enter.native="handleInputConfirmLanguage"-->
+      <!--      >-->
+      <!--      </el-input>-->
 
-      <el-button v-else class="button-new-tag" type="text" @click="languageAddVisible = true">添加语言</el-button>
+      <el-button class="button-new-tag" type="text" @click="languageAddVisible = true">添加语言</el-button>
       <el-dialog
           :visible.sync="languageAddVisible"
           append-to-body
@@ -110,18 +101,18 @@
           @close="handleCloseCategory(categoryChoose)">
         {{ categoryChoose }}
       </el-tag>
-      <el-input
-          v-if="categoryVisible"
-          ref="saveCategoryInput"
-          v-model="categoryValue"
-          class="input-new-tag"
-          size="small"
-          @blur="handleInputConfirmCategory"
-          @keyup.enter.native="handleInputConfirmCategory"
-      >
-      </el-input>
+      <!--      <el-input-->
+      <!--          v-if="categoryVisible"-->
+      <!--          ref="saveCategoryInput"-->
+      <!--          v-model="categoryValue"-->
+      <!--          class="input-new-tag"-->
+      <!--          size="small"-->
+      <!--          @blur="handleInputConfirmCategory"-->
+      <!--          @keyup.enter.native="handleInputConfirmCategory"-->
+      <!--      >-->
+      <!--      </el-input>-->
 
-      <el-button v-else class="button-new-tag" type="text" @click="categoryAddVisible = true">添加分类</el-button>
+      <el-button class="button-new-tag" type="text" @click="categoryAddVisible = true">添加分类</el-button>
       <el-dialog
           :visible.sync="categoryAddVisible"
           append-to-body
@@ -170,7 +161,7 @@
 
 <script>
 import Cropper from "@/components/post/Cropper";
-import {submitPostInfo} from "@/api/api";
+import {showPostEdit, submitPostInfo} from "@/api/api";
 
 const categoryOptions = ['前端', '后端', '数据库', '操作系统', '网络', '游戏', '大数据', '人工智能', '测试', '安全', '小程序', '软件工程'];
 const languageOptions = ['C++', 'Dart', 'Python', 'Javascript',
@@ -229,7 +220,7 @@ export default {
       categories: categoryOptions,
       languages: languageOptions,
 
-      description: '',
+      postDescription: '',
       imageUrl: '',
 
       ruleForm: {
@@ -241,7 +232,15 @@ export default {
         comment: true,
         languageField: 0,
         category: 0,
-        cover: '我是父组件的cover'
+        cover: '',
+      },
+
+      singleTag: {
+        tagId: 0,
+        tagName: '',
+        creatorId: 0,
+        createTime: '',
+        postCount: 0,
       }
     }
   },
@@ -254,7 +253,6 @@ export default {
       type: Object,
       require: true,
       default() {
-
       }
     }
 
@@ -267,10 +265,6 @@ export default {
   },
   methods: {
     //将语言转化为数字
-    // 'C++' ,'Dart', 'Python' , 'Javascript',
-    // 'iOS','Java', 'Kotlin', 'Android',
-    // 'CSS','HTML', 'Swift','Csharp',
-    // 'Rust', 'Go', 'C'
     transformLanguage(checkedLanguages) {
       for (let i of checkedLanguages) {
         console.log(i)
@@ -377,16 +371,23 @@ export default {
     //父子组件传参
     submitDialogue() {
       this.visible = false
-      this.ruleForm.id = null
+      if (this.postInfo.id) {
+        this.ruleForm.id = this.postInfo.id
+      } else {
+        this.ruleForm.id = null
+      }
+
       //console.log("id===========>"+this.ruleForm.id)
       this.ruleForm.title = this.postInfo.title
       this.ruleForm.description = this.postInfo.description
       this.ruleForm.content = this.postInfo.content
+      //this.ruleForm.tags=this.dynamicTags
       // this.ruleForm.category=this.checkedCategories
       this.transformLanguage(this.checkedLanguages);
       this.transformCategory(this.checkedCategories);
       console.log("transform==============================>" + this.ruleForm.languageField);
-      submitPostInfo(this.ruleForm).then(res => {
+      console.log("transform==============================>" + this.ruleForm.category);
+      submitPostInfo(this.ruleForm, this.dynamicTags).then(res => {
         console.log(res)
       }).catch(err => {
         console.log(err)
@@ -454,16 +455,6 @@ export default {
 
     },
 
-    handleInputConfirmCategory() {
-      let categoryValue = this.categoryValue;
-      if (categoryValue) {
-        this.checkedLanguages.push(categoryValue);
-      }
-      this.categoryVisible = false;
-      this.categoryValue = '';
-      console.log(this.checkedCategories);
-    },
-
     //动态生成语言标签
     handleCloseLanguage(tag) {
       this.checkedLanguages.splice(this.checkedLanguages.indexOf(tag), 1);
@@ -479,26 +470,136 @@ export default {
       }
     },
 
-    handleInputConfirmLanguage() {
-      let languageValue = this.languageValue;
-      if (languageValue) {
-        this.checkedLanguages.push(languageValue);
-      }
-      this.languageVisible = false;
-      this.languageValue = '';
-      console.log(this.checkedLanguages);
+    //获取文章封面url
+    getCoverUrl(previewImg) {
+      this.ruleForm.cover = previewImg
     },
 
-    //获取文章封面url
-    getCoverUrl(data) {
-      this.ruleForm.cover = data
-      console.log(this.ruleForm.cover)
+    //静态描述加载
+    showDescription() {
+      this.postDescription = this.postInfo.description
+    },
+
+    //回显语言
+    reshowLanguage(_this, languageData) {
+      console.log("come to ========================>reshowLanguage")
+      if ((languageData & C) === C) {
+        _this.checkedLanguages.push("C");
+      }
+      if ((languageData & CPP) === CPP) {
+        _this.checkedLanguages.push("C++");
+      }
+      if ((languageData & JAVA) === JAVA) {
+        _this.checkedLanguages.push("Java");
+      }
+      if ((languageData & PYTHON) === PYTHON) {
+        _this.checkedLanguages.push("Python");
+      }
+      if ((languageData & JAVASCRIPT) === JAVASCRIPT) {
+        _this.checkedLanguages.push("Javascript");
+      }
+      if ((languageData & HTML) === HTML) {
+        _this.checkedLanguages.push("HTML");
+      }
+      if ((languageData & CSS) === CSS) {
+        _this.checkedLanguages.push("CSS");
+      }
+      if ((languageData & CSHARP) === CSHARP) {
+        _this.checkedLanguages.push("Csharp");
+      }
+      if ((languageData & RUST) === RUST) {
+        _this.checkedLanguages.push("Rust");
+      }
+      if ((languageData & GO) === GO) {
+        _this.checkedLanguages.push("Go");
+      }
+      if ((languageData & ANDROID) === ANDROID) {
+        _this.checkedLanguages.push("Android");
+      }
+      if ((languageData & KOTLIN) === KOTLIN) {
+        _this.checkedLanguages.push("Kotlin");
+      }
+      if ((languageData & SWIFT) === SWIFT) {
+        _this.checkedLanguages.push("Swift");
+      }
+      if ((languageData & IOS) === IOS) {
+        _this.checkedLanguages.push("iOS");
+      }
+      if ((languageData & DART) === DART) {
+        _this.checkedLanguages.push("Dart");
+      }
+    },
+
+    //回显分类
+    reshowCategory(_this, categoryData) {
+      if ((categoryData & FRONT_END) === FRONT_END) {
+        _this.checkedCategories.push("前端")
+      }
+      if ((categoryData & BACK_END) === BACK_END) {
+        _this.checkedCategories.push("后端")
+      }
+      if ((categoryData & DATABASE) === DATABASE) {
+        _this.checkedCategories.push("数据库")
+      }
+      if ((categoryData & OS) === OS) {
+        _this.checkedCategories.push("操作系统")
+      }
+      if ((categoryData & NETWORK) === NETWORK) {
+        _this.checkedCategories.push("网络")
+      }
+      if ((categoryData & GAME) === GAME) {
+        _this.checkedCategories.push("游戏")
+      }
+      if ((categoryData & BIG_DATA) === BIG_DATA) {
+        _this.checkedCategories.push("大数据")
+      }
+      if ((categoryData & AI) === AI) {
+        _this.checkedCategories.push("人工智能")
+      }
+      if ((categoryData & TEST) === TEST) {
+        _this.checkedCategories.push("测试")
+      }
+      if ((categoryData & SECURITY) === SECURITY) {
+        _this.checkedCategories.push("安全")
+      }
+      if ((categoryData & APPLET) === APPLET) {
+        _this.checkedCategories.push("小程序")
+      }
+      if ((categoryData & FRONT_END) === FRONT_END) {
+        _this.checkedCategories.push("软件工程")
+      }
+
+    },
+  },
+  updated() {
+    this.showDescription();
+  },
+  created() {
+    //重新编辑文章属性回显
+    const postId = this.$route.params.postId
+    const _this = this
+    if (postId) {
+      //this.$axios.get('/post/' + postId).then(res => {
+      showPostEdit(postId).then(res => {
+        const post = res.data
+        _this.ruleForm.comment = post.comment
+        _this.ruleForm.privacy = post.privacy
+        // _this.reshowCategory(post.category)
+        _this.reshowLanguage(_this, post.languageField)
+        _this.reshowCategory(_this, post.category)
+      })
     }
   }
+
+
 }
 </script>
 
 <style scoped>
+.m-dialogue {
+  min-width: 650px;
+}
+
 /*tag增加样式*/
 .el-tag + .el-tag {
   margin-left: 10px;
