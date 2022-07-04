@@ -66,6 +66,10 @@ const routes = [
     // },
     component: PostEdit
   },
+  {
+    path: '/post/view/:id',
+    component: PostDetail
+  }
 ]
 
 const router = new VueRouter({
