@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="post-cover">
-      <el-image :fit="cover" :src="post.url" class="post-cover-img" lazy>
+      <el-image :src="post.url" class="post-cover-img" lazy>
         <el-image slot="placeholder" :src="require('@/assets/images/image_loading.gif')" class="image-slot"/>
       </el-image>
     </div>
@@ -32,7 +32,7 @@ export default {
   name: "TopPostListPanel",
   props: {
     post: Object,
-    index: 1
+    index: Number
   },
   data() {
     return {
@@ -78,6 +78,8 @@ export default {
 
 .post-cover {
   flex: 6;
+  height: 130px;
+  width: 220px;
 }
 
 .post-title {
@@ -97,6 +99,7 @@ export default {
   width: 100%;
   height: auto;
   border-radius: 4px;
+  margin-top: 10px;
 }
 
 a {

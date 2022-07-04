@@ -4,7 +4,7 @@
         class="hot-text toutiao">头条</span></div>
 
     <div class="hot-post-panel-left">
-      <el-carousel class="hot-post-carousel" height="380px">
+      <el-carousel class="hot-post-carousel" height="320px">
         <el-carousel-item v-for="hotPost of hotPostList" :hotPost="hotPost">
           <a :href="hotPost.url">
             <el-image :fit="cover" :src="hotPost.cover" class="hot-post-img">
@@ -34,11 +34,6 @@
       <div class="single-simple-post">
         <div class="single-simple-post-title">12312sssssssssssssssssssssssssssssssssssssss3</div>
         <div class="single-simple-post-desc">12312sssssssssssssssssssssssssssssssssssssss34444444444</div>
-      </div>
-
-      <div class="single-simple-post">
-        <div class="single-simple-post-title">123123</div>
-        <div class="single-simple-post-desc">123123</div>
       </div>
 
       <div class="single-simple-post">
@@ -91,7 +86,7 @@ export default {
 
 .hot-post-panel {
   padding: 10px 10px 30px 10px;
-  height: 420px;
+  height: 360px;
   width: auto;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0 5px 15px;
@@ -105,14 +100,14 @@ export default {
 
 .hot-post-panel-right {
   float: right;
-  width: 400px;
-  height: 400px;
+  width: 280px;
+  height: 280px;
   overflow: hidden;
 }
 
 .hot-post-img {
-  height: 300px;
-  width: 460px;
+  height: auto;
+  width: auto;
   border-radius: 4px;
 }
 
@@ -194,8 +189,8 @@ export default {
 }
 
 .hot-post-carousel {
-  height: 400px;
-  width: 460px;
+  height: 340px;
+  width: 420px;
 }
 
 /deep/ .el-carousel__button {

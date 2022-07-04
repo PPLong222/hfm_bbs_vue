@@ -31,4 +31,19 @@ export const getHotPostList = (category, languageField, pageIndex, pageNum) => g
     pageIndex,
     pageNum
 })
+export const searchPostByWords = (category, languageField, words, pageIndex, pageNum) => get("/post/search/searchPostByWords", {
+    category,
+    languageField,
+    words,
+    pageIndex,
+    pageNum
+})
+
+export const searchUserByNickName = (name, userId, pageIndex, pageNum) => get("/userInfo/searchUserByNicknameInPage", {
+    name,
+    userId,
+    pageIndex,
+    pageNum
+})
+
 

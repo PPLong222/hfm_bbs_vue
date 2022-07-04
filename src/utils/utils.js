@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export default {
     isRequestSuccess(res) {
         if (res && res.code && res.success) {
@@ -6,18 +8,23 @@ export default {
         return false;
     },
     clearCookieByName(name) {
-        document.cookie = name + "=";
+        Cookies.remove(name)
     },
     getCookieByName(name) {
         let cookies = document.cookie.split(";");
         for (let i = 0; i < cookies.length; i++) {
             let obj = cookies[i].split("=");
-            console.log(obj[1])
             // trim剔除多余的空格
             if (obj[0].trim() === name) {
                 return obj[1]
             }
         }
+    },
+    setObjectToLocalStorage(key, value) {
+        window.localStorage.setItem(key, JSON.stringify(value))
+    },
+    getObjectFromLocalStorage(key) {
+        return JSON.parse(window.localStorage.getItem(key))
     },
     isNullOrNil(str) {
         if (str == null || str.length < 1) {
@@ -43,21 +50,62 @@ export default {
                 v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
+    },
+    //文档高度
+    getDocumentTop() {
+        var scrollTop = 0,
+            bodyScrollTop = 0,
+            documentScrollTop = 0;
+        if (document.body) {
+            bodyScrollTop = document.body.scrollTop;
+        }
+        if (document.documentElement) {
+            documentScrollTop = document.documentElement.scrollTop;
+        }
+        scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+        return scrollTop;
+    },
+
+//可视窗口高度
+    getWindowHeight() {
+        var windowHeight = 0;
+        if (document.compatMode === "CSS1Compat") {
+            windowHeight = document.documentElement.clientHeight;
+        } else {
+            windowHeight = document.body.clientHeight;
+        }
+        return windowHeight;
+    },
+
+//滚动条滚动高度
+    getScrollHeight() {
+        var scrollHeight = 0,
+            bodyScrollHeight = 0,
+            documentScrollHeight = 0;
+        if (document.body) {
+            bodyScrollHeight = document.body.scrollHeight;
+        }
+        if (document.documentElement) {
+            documentScrollHeight = document.documentElement.scrollHeight;
+        }
+        scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+        return scrollHeight;
     }
+
 
 }
 
 export const languages = {
     "Java": 70,
-    "C": 70,
-    "C++": 60,
-    "Python": 50,
+    "C": 80,
+    "C++": 70,
+    "Python": 60,
     "Go": 50,
     "C#": 50,
-    "SQL": 50,
+    "SQL": 75,
     "Rust": 50,
-    "JavaScript": 50,
-    "Android": 50,
-    "Dart": 50,
-    "Kotlin": 50
+    "JavaScript": 70,
+    "Android": 40,
+    "Dart": 35,
+    "Kotlin": 45
 }

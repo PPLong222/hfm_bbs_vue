@@ -32,6 +32,7 @@
 
 <script>
 import {login} from "@/api/api";
+import Cookies from "js-cookie"
 
 function onPwdButtonClick() {
   let icon = document.getElementById("input-suffix")
@@ -56,12 +57,19 @@ function onLoginButtonClick() {
       if (this.utils.isRequestSuccess(res)) {
         // 浏览器存入token
         let token = res.data.token
+        let user = res.data.user
         if (token != null) {
-          document.cookie = "token=" + token
-          document.cookie = "expireAt=" + res.data.expireAt
+          // 使用js-cookie来传， 默认token过期时间是一天
+          Cookies.set('token', token, {expires: 1})
         }
+        if (user != null) {
+          this.utils.setObjectToLocalStorage("user", user)
+        }
+        console.log(this.utils.getObjectFromLocalStorage("user"))
         // 登录成功
         this.$router.push("/index")
+      } else {
+        // 提示错误信息
       }
     }).catch(err => {
     })

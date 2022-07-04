@@ -4,9 +4,21 @@
     <!--      <router-link to="/">Home</router-link> |-->
     <!--      <router-link to="/about">About</router-link>-->
     <!--    </nav>-->
-    <router-view/>
+    <!--  解决单页面跳转问题  -->
+    <router-view :key="routeKey"/>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  computed: {
+    routeKey() {
+      return this.$route.path
+    },
+  }
+}
+</script>
 
 <style>
 /* 设置全局字体 */
@@ -35,4 +47,5 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>

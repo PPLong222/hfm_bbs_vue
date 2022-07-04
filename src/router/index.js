@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PostEdit from "@/views/post/PostEdit";
 import PostDetail from "@/views/post/PostDetail";
+import SearchResultView from "@/views/page/SearchResultView";
 
 Vue.use(VueRouter)
 
@@ -72,6 +73,14 @@ const routes = [
     // },
     component: PostEdit
   },
+  {
+    path: '/search/:words',
+    name: 'Search',
+    // meta: {
+    //   requireAuth: true//带有meta：requireAuth: true说明是需要登录字后才能访问的受限资源
+    // },
+    component: SearchResultView
+  }
 ]
 
 const router = new VueRouter({

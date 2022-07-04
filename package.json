@@ -13,6 +13,7 @@
     "element-ui": "^2.15.9",
     "github-markdown-css": "^5.1.0",
     "jquery": "^3.6.0",
+    "js-cookie": "^3.0.1",
     "markdown-it": "^13.0.1",
     "mavon-editor": "^2.10.4",
     "node-sass": "^7.0.1",
