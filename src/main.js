@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
     console.log(to.path)
     // 判断用户是否登录, 此处暂时用浏览器Cookie的ExpireAt
     let token = utils.getCookieByName("token")
-    let expireAt = utils.getCookieByName("expireAt")
+    let expireAt = utils.getCookieByName("expires")
 
     // 如果在路由白名单中则放行, 并且可能还要传一些用户变量
     // 这里的判断可能还需要正则表达式来确定, 暂时先用列表判断

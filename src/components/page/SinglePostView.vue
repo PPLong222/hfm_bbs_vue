@@ -5,7 +5,10 @@
     </a>
     <div class="post-description">
       <a :href="post.url" target="_blank">
-        <img :src="post.cover" alt="" class="post-cover"/>
+        <el-image :src="post.cover" alt="" class="post-cover" lazy>
+          <el-image slot="placeholder" :src="require('@/assets/images/image_loading.gif')" class="image-slot">
+          </el-image>
+        </el-image>
       </a>
       <a :href="post.url" target="_blank">
         <span class="post-pretext">{{ post.description }}</span>
@@ -41,7 +44,7 @@ export default {
 
 .post-container {
   height: fit-content;
-  max-height: 280px;
+  max-height: 240px;
   width: auto;
   padding: 20px 10px 10px 20px;
   background-color: white;
@@ -53,9 +56,8 @@ export default {
 }
 
 .post-cover {
-  width: 270px;
-  height: 160px;
-  object-fit: cover;
+  width: 220px;
+  height: 130px;
   border-radius: 8px;
   display: inline-block;
 }
@@ -63,11 +65,11 @@ export default {
 .post-pretext {
   text-overflow: clip;
   overflow: hidden;
-  height: 160px;
-  width: 560px;
+  height: 120px;
+  max-width: 440px;
   display: inline-block;
   margin-left: 20px;
-  font-size: 20px;
+  font-size: 16px;
   word-wrap: normal;
   word-break: break-all;
   white-space: normal;

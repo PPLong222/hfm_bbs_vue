@@ -48,7 +48,7 @@
     <div class="search">
       <div style="float: right">
         <el-input v-model="input" placeholder="请输入您要搜索的内容...">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button slot="append" icon="el-icon-search" v-on:click="onSearchButtonClicked"></el-button>
         </el-input>
       </div>
     </div>
@@ -81,6 +81,14 @@ export default {
         _this.$store.commit("REMOVE_INFO")
         _this.$router.push("/login")
       })
+    },
+    // 搜索按钮点击时跳转的逻辑
+    onSearchButtonClicked() {
+      if (this.input !== '') {
+        this.$router.push({
+          path: `/search/${this.input}`
+        })
+      }
     }
   },
   created() {
@@ -102,7 +110,7 @@ export default {
   height: 70px;
   min-width: 1356px;
   text-align: center;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
 .username_style {
