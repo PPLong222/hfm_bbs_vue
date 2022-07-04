@@ -12,7 +12,8 @@
         </el-form-item>
 
         <el-form-item class="characterStyle" label="内容" prop="content">
-          <mavon-editor v-model="ruleForm.content" class="editor"></mavon-editor>
+          <mavon-editor ref=md v-model="ruleForm.content"
+                        class="editor" @imgAdd="imgAdd"></mavon-editor>
         </el-form-item>
 
         <el-form-item class="m-content">
@@ -34,6 +35,8 @@
 <script>
 import Header from "@/components/post/Header";
 import PostDialogue from "@/components/post/PostDialogue";
+import {uploadSimpleImage} from "@/api/cos";
+import {showPostEdit} from "@/api/api";
 
 export default {
   name: "PostEdit",
@@ -97,30 +100,62 @@ export default {
     handleClick() {
       //console.log("this is handleClick")
       this.postVisible = true
+    },
+    //编辑器图片上传url替换
+    // 绑定@imgAdd event
+    imgAdd(pos, $file) {
+      var _this = this
+      // 第一步.将图片上传到服务器.
+      let formdata = new FormData();
+      formdata.append('image', $file);
+      uploadSimpleImage($file, (err, data) => {
+        if (err) {
+          console.log(err)
+        }
+        if (data) {
+          let pictureUrl = "https://" + data.Location
+          _this.$refs.md.$img2Url(pos, pictureUrl);
+          console.log(data)
+        }
+      })
+      // axios({
+      //   url: 'server url',
+      //   method: 'post',
+      //   data: formdata,
+      //   headers: {'Content-Type': 'multipart/form-data'},
+      // }).then((url) => {
+      //   // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+      //   /**
+      //    * $vm 指为mavonEditor实例，可以通过如下两种方式获取
+      //    * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
+      //    * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
+      //    */
+      //   $vm.$img2Url(pos, url);
+      // })
     }
   },
-  // created() {
-  //   //重新编辑文章页面回显
-  //   const postId = this.$route.params.postId
-  //   const _this = this
-  //   if (postId) {
-  //     this.$axios.get('/post/' + postId).then(res => {
-  //       const post = res.data.data
-  //       _this.ruleForm.id = post.id
-  //       _this.ruleForm.title = post.title
-  //       _this.ruleForm.description = post.description
-  //       _this.ruleForm.content = post.content
-  //
-  //     })
-  //   }
-  // }
+  created() {
+    //重新编辑文章页面回显
+    const postId = this.$route.params.postId
+    const _this = this
+    if (postId) {
+      //this.$axios.get('/post/' + postId).then(res => {
+      showPostEdit(postId).then(res => {
+        const post = res.data
+        _this.ruleForm.id = post.id
+        _this.ruleForm.title = post.title
+        _this.ruleForm.description = post.description
+        _this.ruleForm.content = post.content
+      })
+    }
+  }
 }
 </script>
 
 <style scoped>
-.allContainer{
-  margin-right: 50px;
-  margin-left: 30px;
+.allContainer {
+  margin-right: 6%;
+  margin-left: 6%;
 }
 .m-content{
   text-align: center;
@@ -146,7 +181,7 @@ export default {
 }
 
 .editor {
-  height: 500px;
+  height: 700px;
 }
 
 /*/deep/ .el-form-item__label{*/
