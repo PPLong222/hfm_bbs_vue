@@ -5,7 +5,6 @@
     <div class="pre-box">
       <!--    <template v-if="!isPreview">-->
       <el-upload :auto-upload="false"
-                 :http-request="httpRequest"
                  :show-file-list="false"
                  :on-change='beforeAvatarUpload'
                  action="https://jsonplaceholder.typicode.com/posts/"
@@ -115,20 +114,20 @@ export default {
       // 防止重复提交
       loading: false,
       //用于存储图片的url
-      url: '我是子组件的url'
+      url: ''
     }
   },
   methods: {
     // 上传按钮 限制图片大小和类型
     beforeAvatarUpload(file, fileList) {
       const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt2M = file.size / 1024 / 1024 < 5;
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+        this.$message.error('上传封面只能是 JPG/PNG 格式!');
         return false
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
+        this.$message.error('上传头像图片大小不能超过 5MB!');
         return false
       }
       // 上传成功后将图片地址赋值给裁剪框显示图片
@@ -193,38 +192,13 @@ export default {
           if (data) {
             this.previewImg = "https://" + data.Location
             console.log(data)
+            this.$emit("emitCover", this.previewImg)
+            console.log("测试父子组件传参", this.previewImg)
           }
         })
       });
 
-
-      this.emitCoverUrl();
-      // 获取截图的 base64 数据
-      // this.$refs.cropper.getCropData(data => {
-      //     console.log(data)
-      // })
-
     },
-
-    //向父组件传递图片url
-    emitCoverUrl() {
-      this.$emit("emitUrl", this.url)
-    },
-
-    httpRequest(file) {
-      console.log("===========================>httpRequest")
-      uploadSimpleImage(file.file, (err, data) => {
-        if (err) {
-          console.log(err)
-        }
-        if (data) {
-          this.previewImg = "https:// " + data.Location
-          console.log(data)
-        }
-      })
-    }
-
-
   }
 }
 </script>

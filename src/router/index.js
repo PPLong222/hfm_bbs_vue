@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PostEdit from "@/views/post/PostEdit";
-import PostDetail from "@/views/post/PostDetail";
 
 Vue.use(VueRouter)
 
@@ -58,11 +57,6 @@ const routes = [
     //   requireAuth: true//带有meta：requireAuth: true说明是需要登录字后才能访问的受限资源
     // },
     component: PostEdit
-  },
-  {
-    path: '/post/:postId',
-    name: 'PostDetail',
-    component: PostDetail
   },
   {
     path: '/post/:postId/edit',
