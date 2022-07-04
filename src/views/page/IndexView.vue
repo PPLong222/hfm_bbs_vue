@@ -42,15 +42,6 @@
         </div>
       </div>
     </div>
-    <h1>hello</h1>
-    <!--test-->
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <p style="height:200px;">asd</p>
-    <!--回到顶部的组件-->
     <go-top></go-top>
   </div>
 </template>
