@@ -96,16 +96,16 @@ export default {
 }
 
 export const languages = {
-    "Java": 70,
-    "C": 80,
-    "C++": 70,
-    "Python": 60,
+    "Java": 50,
+    "C": 50,
+    "C++": 50,
+    "Python": 50,
     "Go": 50,
     "C#": 50,
-    "SQL": 75,
+    "SQL": 50,
     "Rust": 50,
-    "JavaScript": 70,
-    "Android": 40,
-    "Dart": 35,
-    "Kotlin": 45
+    "JavaScript": 50,
+    "Android": 50,
+    "Dart": 50,
+    "Kotlin": 50
 }

@@ -10,7 +10,7 @@ function setRandomSize() {
   // 缩放阈值
   const GAP = 50
   const BASE_LINE_HEIGHT = 30
-  const BASE_FONT_SIZE = 20
+  const BASE_FONT_SIZE = 25
   let languageList = document.getElementsByClassName("language-item")
   for (let element of languageList) {
     let ratio = parseInt(element.getAttribute("value")) / GAP
@@ -21,15 +21,16 @@ function setRandomSize() {
   }
 }
 
-function setRandomColor() {
-  const language_color = ["#072448", "#54d2d2", "#ffcb00", "#f8aa4b", "#ff6150"]
-  let languageList = document.getElementsByClassName("language-item")
-  for (let element of languageList) {
-    let color = language_color[parseInt(Math.random() * 5)]
-    console.log(color)
-    element.style.color = color
-  }
-}
+// 不设置随机颜色
+// function setRandomColor() {
+//   const language_color = ["#072448", "#54d2d2", "#ffcb00", "#f8aa4b", "#ff6150"]
+//   let languageList = document.getElementsByClassName("language-item")
+//   for (let element of languageList) {
+//     let color = language_color[parseInt(Math.random() * 5)]
+//     console.log(color)
+//     element.style.color = color
+//   }
+// }
 
 export default {
   name: "LanguagePanel",
@@ -40,7 +41,7 @@ export default {
     this.$nextTick(function () {
       // 仅在整个视图都被渲染之后才会运行的代码
       setRandomSize()
-      setRandomColor()
+      // setRandomColor()
     })
   }
 }
@@ -61,6 +62,6 @@ export default {
   height: fit-content;
   display: inline-block;
   text-decoration: none;
-  color: #000302;
+  color: #88888e;
 }
 </style>
