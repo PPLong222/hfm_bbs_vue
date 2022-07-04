@@ -61,11 +61,6 @@ const routes = [
     component: PostEdit
   },
   {
-    path: '/post/:postId',
-    name: 'PostDetail',
-    component: PostDetail
-  },
-  {
     path: '/post/:postId/edit',
     name: 'PostEdit',
     // meta: {
@@ -80,6 +75,10 @@ const routes = [
     //   requireAuth: true//带有meta：requireAuth: true说明是需要登录字后才能访问的受限资源
     // },
     component: SearchResultView
+  },
+  {
+    path: '/post/view/:id',
+    component: PostDetail
   }
 ]
 

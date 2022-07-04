@@ -1,27 +1,32 @@
 <template>
   <div class="cropper-wrapper">
     <!-- element 上传图片按钮 -->
-    <template v-if="!isPreview">
+    <!--    <template>-->
+    <div class="pre-box">
+      <!--    <template v-if="!isPreview">-->
       <el-upload :auto-upload="false"
-                 :on-change='handleChangeUpload'
                  :show-file-list="false"
-                 action=""
+                 :on-change='beforeAvatarUpload'
+                 action="https://jsonplaceholder.typicode.com/posts/"
                  class="upload-demo"
                  drag>
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">点击上传</div>
-        <div class="el-upload__tip">支持绝大多数图片格式，单张图片最大支持5MB</div>
+        <i v-if="!isPreview" class="el-icon-upload"></i>
+        <div v-if="!isPreview" class="el-upload__text">点击上传</div>
+        <div v-if="!isPreview" class="el-upload__tip">支持绝大多数图片格式，单张图片最大支持5MB</div>
+        <img v-if="isPreview" :src="previewImg" alt="裁剪图片" width="240px">
       </el-upload>
-    </template>
-    <div v-else class="pre-box">
-      <el-upload :auto-upload="false"
-                 :on-change='handleChangeUpload'
-                 :show-file-list="false"
-                 action=""
-                 class="upload-demo">
-        <img :src="previewImg" alt="裁剪图片" width="240px">
-      </el-upload>
+      <!--    </template>-->
     </div>
+    <!--    <div v-else class="pre-box">-->
+    <!--      <el-upload :auto-upload="false"-->
+    <!--                 :on-change='beforeAvatarUpload'-->
+    <!--                 :show-file-list="false"-->
+    <!--                 :http-request="httpRequest"-->
+    <!--                 action="https://jsonplaceholder.typicode.com/posts/"-->
+    <!--                 class="upload-demo">-->
+    <!--        <img :src="previewImg" alt="裁剪图片" width="240px">-->
+    <!--      </el-upload>-->
+    <!--    </div>-->
     <!-- vueCropper 剪裁图片实现-->
     <el-dialog :visible.sync="dialogVisible" append-to-body class="crop-dialog" title="图片剪裁">
       <div class="cropper-content">
@@ -49,14 +54,15 @@
         </div>
       </div>
       <div class="action-box">
-        <el-upload :auto-upload="false"
-                   :on-change='handleChangeUpload'
-                   :show-file-list="false"
-                   action=""
-                   class="upload-demo">
-          <el-button plain type="primary">更换图片</el-button>
-        </el-upload>
-        <el-button plain type="primary" @click="clearImgHandle">清除图片</el-button>
+        <!--        <el-upload :auto-upload="false"-->
+        <!--                   :on-change='beforeAvatarUpload'-->
+        <!--                   :show-file-list="false"-->
+        <!--                   :http-request="httpRequest"-->
+        <!--                   action="https://jsonplaceholder.typicode.com/posts/"-->
+        <!--                   class="upload-demo">-->
+        <!--          <el-button plain type="primary">更换图片</el-button>-->
+        <!--        </el-upload>-->
+        <!--        <el-button plain type="primary" @click="clearImgHandle">清除图片</el-button>-->
         <el-button plain type="primary" @click="rotateLeftHandle">左旋转</el-button>
         <el-button plain type="primary" @click="rotateRightHandle">右旋转</el-button>
         <el-button plain type="primary" @click="changeScaleHandle(1)">放大</el-button>
@@ -72,7 +78,12 @@
 </template>
 
 <script>
+import {uploadSimpleImage} from '@/api/cos'
 
+const blobToFile = (blob, fileName) => {
+  const file = new File([blob], fileName, {type: blob.type});
+  return file;
+}
 export default {
   name: "Cropper",
   data() {
@@ -103,20 +114,20 @@ export default {
       // 防止重复提交
       loading: false,
       //用于存储图片的url
-      url: '我是子组件的url'
+      url: ''
     }
   },
   methods: {
     // 上传按钮 限制图片大小和类型
-    handleChangeUpload(file, fileList) {
+    beforeAvatarUpload(file, fileList) {
       const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt2M = file.size / 1024 / 1024 < 5;
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+        this.$message.error('上传封面只能是 JPG/PNG 格式!');
         return false
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
+        this.$message.error('上传头像图片大小不能超过 5MB!');
         return false
       }
       // 上传成功后将图片地址赋值给裁剪框显示图片
@@ -174,18 +185,20 @@ export default {
         this.dialogVisible = false
         this.previewImg = URL.createObjectURL(blob)
         this.isPreview = true
-      })
-      this.emitCoverUrl();
-      // 获取截图的 base64 数据
-      // this.$refs.cropper.getCropData(data => {
-      //     console.log(data)
-      // })
-    },
+        uploadSimpleImage(blobToFile(blob, 'fileName'), (err, data) => {
+          if (err) {
+            console.log(err)
+          }
+          if (data) {
+            this.previewImg = "https://" + data.Location
+            console.log(data)
+            this.$emit("emitCover", this.previewImg)
+            console.log("测试父子组件传参", this.previewImg)
+          }
+        })
+      });
 
-    //向父组件传递图片url
-    emitCoverUrl() {
-      this.$emit("emitUrl", this.url)
-    }
+    },
   }
 }
 </script>

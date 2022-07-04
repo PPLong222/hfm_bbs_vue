@@ -1,4 +1,5 @@
 import {get, post} from './request'
+import request from "./request";
 
 export const test = p => get("/test", p)
 
@@ -12,11 +13,39 @@ export const signup = (userName, email, password) =>
 export const confirmCode = (email, code) =>
     post("/signup/confirm", {email, code})
 
-export const submitPostInfo = (postInfo) =>
-    post("/post/edit", postInfo)
+export const submitPostInfo = (postInfo, tags) =>
+    post("/post/edit", {postInfo, tags})
+
+export const showPostEdit = (postId) =>
+    get("/post/" + postId, {postId})
 
 // 测试文章返回值
 export const getTestPostList = (p) => get("/test/test_post", p)
+
+export function findPostById(id) {
+    return request({
+        url: `/post/view/${id}`,
+        method: 'post'
+    })
+}
+
+export function getCommentsByPost(id) {
+    return request({
+        url: `/comments/post/${id}`,
+        method: 'post'
+    })
+}
+
+export function publishComment(comment,token) {
+    return request({
+        headers: {'Authorization': token},
+        url: '/comments/create/change',
+        method: 'post',
+        data: comment
+    })
+}
+
+
 
 export const getRecommendPostList = (category, languageField, pageIndex, pageNum) => get("/post/getRecommendPostByPage", {
     category,

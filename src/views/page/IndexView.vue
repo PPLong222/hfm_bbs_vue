@@ -42,6 +42,16 @@
         </div>
       </div>
     </div>
+    <h1>hello</h1>
+    <!--test-->
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <p style="height:200px;">asd</p>
+    <!--回到顶部的组件-->
+    <go-top></go-top>
   </div>
 </template>
 
@@ -56,6 +66,7 @@ import Header from "@/components/post/Header";
 import TopPostListPanel from "@/components/page/TopPostListPanel";
 import TopAuthorPanel from "@/components/page/TopAuthorPanel";
 
+import GoTop from "@/components/gotop/GoTop";
 
 export default {
   name: "IndexView",
@@ -66,7 +77,8 @@ export default {
     LanguagePanel,
     CategoryPanel,
     HotPostPanel,
-    SinglePostView
+    SinglePostView,
+    "go-top": GoTop
   },
   created() {
   },
