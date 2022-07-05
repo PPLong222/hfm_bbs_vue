@@ -38,16 +38,15 @@ export function getCommentsByPost(id) {
     })
 }
 
-export function publishComment(comment,token) {
+export function publishComment(comment) {
     return request({
-        headers: {'Authorization': token},
         url: '/comments/create/change',
         method: 'post',
         data: comment
     })
 }
 
-
+export const findUserById = (id) => get()
 
 export const getRecommendPostList = (category, languageField, pageIndex, pageNum) => get("/post/getRecommendPostByPage", {
     category,
@@ -84,6 +83,22 @@ export const followSingleUser = (followeeId, followerId) => post("/user/follow",
 export const getTopAuthor = (limit) => get("/user/getTopAuthor", {limit})
 
 export const getHotPostList = p => get("/post/getHotPost", p)
+export function getUserById(id) {
+    return request({
+        url: `/userInfo/${id}`,
+        method: 'get'
+    })
+
+}
+
+export function modifyUserInfo(user) {
+    return request({
+        url: '/userInfo/change',
+        method: 'post',
+        data: user
+    })
+}
+
 
 export const getTotalUserCount = p => get("/user/getTotalUserCount", p)
 
