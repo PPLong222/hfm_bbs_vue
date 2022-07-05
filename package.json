@@ -16,6 +16,7 @@
     "js-cookie": "^3.0.1",
     "markdown-it": "^13.0.1",
     "mavon-editor": "^2.10.4",
+    "moment": "^2.29.3",
     "node-sass": "^7.0.1",
     "qs": "^6.10.5",
     "sass-loader": "^13.0.2",
