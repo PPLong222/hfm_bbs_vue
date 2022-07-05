@@ -141,7 +141,7 @@ export default {
     if (postId) {
       //this.$axios.get('/post/' + postId).then(res => {
       showPostEdit(postId).then(res => {
-        const post = res.data
+        const post = res.data.postInfo
         _this.ruleForm.id = post.id
         _this.ruleForm.title = post.title
         _this.ruleForm.description = post.description
