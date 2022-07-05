@@ -46,7 +46,8 @@ function onRegisterButtonClick() {
           }
         })
       } else {
-        this.isLoading = true
+        this.$message.error(res.msg)
+        this.isLoading = false
       }
     }).catch(err => {
       // 进行错误提示
@@ -115,10 +116,13 @@ export default {
 }
 
 .testify-block {
-  border: 1px solid #0066ff;
+  border: 1px solid #4960d0;
+  border-radius: 4px;
   width: auto;
   margin: 20px 20px;
   height: 150px;
+  text-align: center;
+  line-height: 150px;
 }
 
 .desc-text {

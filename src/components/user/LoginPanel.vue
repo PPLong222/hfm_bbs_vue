@@ -18,9 +18,8 @@
     </el-form>
 
 
-    <router-link class="register" to="/signup">加入码社</router-link>
+    <router-link class="register" to="/signup">加入Echo</router-link>
     <div class="forget-pwd">忘记密码</div>
-
     <div>
       <el-button id="login-button" type="primary" v-on:click="onLoginButtonClick">登录</el-button>
     </div>

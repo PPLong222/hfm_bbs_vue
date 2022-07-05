@@ -1,21 +1,31 @@
 <template>
   <div class="top-author-list">
-    <div v-for="i in data" class="single-author-item">
-      <el-image class="author-avatar" src="http://www.pplong.top/gallery/pipi.jpg"></el-image>
+    <div v-for="user of userList" :key="user.id" class="single-author-item">
+      <el-image :src="user.avatar" class="author-avatar"></el-image>
       <div class="author-text">
-        <div class="author-name">1232222222222222222222222222222222222</div>
-        <div class="author-desc">12222222222222222312312312312331231233333333</div>
+        <div class="author-name">{{ user.nickName }}</div>
+        <div class="author-desc">{{ user.description }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {getTopAuthor} from "@/api/api";
+
 export default {
   name: "TopAuthorPanel",
+  mounted() {
+    getTopAuthor(5).then(res => {
+      if (this.utils.isRequestSuccess(res)) {
+        this.userList = res.data
+        console.log(this.userList)
+      }
+    })
+  },
   data() {
     return {
-      data: [1, 2, 3, 4, 5]
+      userList: []
     }
   }
 }

@@ -1,5 +1,4 @@
-import {get, post} from './request'
-import request from "./request";
+import request, {get, post} from './request'
 
 export const test = p => get("/test", p)
 
@@ -53,12 +52,6 @@ export const getRecommendPostList = (category, languageField, pageIndex, pageNum
     pageNum
 })
 
-export const getHotPostList = (category, languageField, pageIndex, pageNum) => get("/post/getTopPostByPage", {
-    category,
-    languageField,
-    pageIndex,
-    pageNum
-})
 export const searchPostByWords = (category, languageField, words, pageIndex, pageNum) => get("/post/search/searchPostByWords", {
     category,
     languageField,
@@ -67,13 +60,26 @@ export const searchPostByWords = (category, languageField, words, pageIndex, pag
     pageNum
 })
 
-export const searchUserByNickName = (name, userId, pageIndex, pageNum) => get("/userInfo/searchUserByNicknameInPage", {
+export const searchUserByNickName = (name, userId, pageIndex, pageNum) => get("/user/searchUserByNickNameInPage", {
     name,
     userId,
     pageIndex,
     pageNum
 })
 
+export const unfollowSingleUser = (followeeId, followerId) => post("/user/unfollow", {
+    followeeId,
+    followerId
+})
+
+export const followSingleUser = (followeeId, followerId) => post("/user/follow", {
+    followeeId,
+    followerId
+})
+
+export const getTopAuthor = (limit) => get("/user/getTopAuthor", {limit})
+
+export const getHotPostList = p => get("/post/getHotPost", p)
 export function getUserById(id) {
     return request({
         url: `/userInfo/${id}`,
@@ -91,3 +97,6 @@ export function modifyUserInfo(user) {
 }
 
 
+export const getTotalUserCount = p => get("/user/getTotalUserCount", p)
+
+export const getTotalPostCount = p => get("/post/getTotalPostCount", p)

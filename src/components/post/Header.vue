@@ -2,7 +2,7 @@
   <div class="m-content">
     <!--    <h3>欢迎来到您的博客</h3>-->
     <div style="float: left;margin-left: 5%">
-      <span class="aspect"><el-link href="/posts"><h2 style="color: #06f">主页</h2></el-link></span>
+      <span class="aspect"><el-link href="/"><h2 style="color: #06f">主页</h2></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>下载·课程</h3></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>学习</h3></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>社区</h3></el-link></span>

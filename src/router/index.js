@@ -15,7 +15,7 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView,
-    // redirect: "/index"
+    redirect: "/index"
   },
   {
     path: '/about',
@@ -82,6 +82,11 @@ const routes = [
   {
     path: '/post/view/:id',
     component: PostDetail
+  },
+  {
+    path: "/common/:category/:language",
+    name: "common",
+    component: () => import(/* webpackChunkName: "about" */ '../views/page/CommonPage')
   },
   {
     path: '/person/info',
