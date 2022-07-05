@@ -4,6 +4,9 @@ import HomeView from '../views/HomeView.vue'
 import PostEdit from "@/views/post/PostEdit";
 import PostDetail from "@/views/post/PostDetail";
 import SearchResultView from "@/views/page/SearchResultView";
+import PersonalCenter from "@/views/user/PersonalEditor";
+import PersonalEditor from "@/views/user/PersonalEditor";
+import PersonalInfo from "@/views/user/PersonalInfo";
 
 Vue.use(VueRouter)
 
@@ -79,6 +82,14 @@ const routes = [
   {
     path: '/post/view/:id',
     component: PostDetail
+  },
+  {
+    path: '/person/info',
+    component: PersonalInfo
+  },
+  {
+    path: '/person/editor',
+    component: PersonalEditor
   }
 ]
 

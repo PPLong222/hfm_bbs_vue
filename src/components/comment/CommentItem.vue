@@ -68,7 +68,7 @@ import {publishComment} from "@/api/api";
 export default {
   name: "CommentItem",
   props: {
-    articleId: Number,
+    postId: Number,
     comment: Object,
     index: Number,
     rootCommentCounts: Number
@@ -78,21 +78,26 @@ export default {
       placeholder: '你的评论...',
       commentShow: false,
       commentShowIndex: '',
-      reply: this.getEmptyReply()
+      reply: this.getEmptyReply(),
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
     }
   },
   methods: {
     showComment(commentShowIndex, toUser) {
       this.reply = this.getEmptyReply()
 
+      this.reply.authorId = this.user.id
+
+      this.reply.parentId = this.comment.commentId
+
       if (this.commentShowIndex !== commentShowIndex) {
         if (toUser) {
-          this.placeholder = `@${toUser.nickname} `
+          this.placeholder = `@${toUser.nickName} `
           this.reply.toUserId = toUser.id
         } else {
           this.placeholder = '你的评论...'
         }
-
+        this.reply.toUserId = toUser.id
         this.commentShow = true
         this.commentShowIndex = commentShowIndex
       } else {
@@ -106,8 +111,8 @@ export default {
         return;
       }
 
-      publishComment(that.reply,this.$store.state.token).then(data => {
-        if(data.success){
+      publishComment(that.reply).then(data => {
+        if(data.status === 200){
           that.$message({type: 'success', message: '评论成功', showClose: true})
           if(!that.comment.childrens){
             that.comment.childrens = []
@@ -127,7 +132,8 @@ export default {
     },
     getEmptyReply() {
       return {
-        articleId: this.articleId,
+        authorId: '',
+        postId: this.postId,
         parent: this.comment.id,
         toUserId: '',
         content: ''

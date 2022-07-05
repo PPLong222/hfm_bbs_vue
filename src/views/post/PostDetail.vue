@@ -159,11 +159,13 @@ export default {
       },
       comments: [],
       comment: {
+        commentId: '',
         post: {},
-        content: '',
+        content: ''
       },
       avatar: '',
-      default_avatar: require('@/assets/icon/icon_github.png')
+      default_avatar: require('@/assets/icon/icon_github.png'),
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
     }
   },
   computed: {
@@ -221,9 +223,11 @@ export default {
         return;
       }
       that.comment.post.id = that.post.id
-      let parms = {postId:that.post.id,content:that.comment.content}
-      publishComment(parms,this.$store.state.token).then(data => {
-        if(data.success){
+
+      let parms = {authorId: this.user.id,postId:that.post.id,content:that.comment.content}
+      publishComment(parms).then(data => {
+        console.log(data)
+        if(data.status === 200){
           that.$message({type: 'success', message: '评论成功', showClose: true})
           that.comment.content = ''
           that.comments.unshift(data.data)

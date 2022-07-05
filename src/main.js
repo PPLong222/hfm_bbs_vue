@@ -12,6 +12,7 @@ import VueCropper from 'vue-cropper'
 import "element-ui/lib/theme-chalk/index.css"
 import 'mavon-editor/dist/css/index.css'
 import 'element-ui/lib/theme-chalk/index.css';
+import axios from "axios";
 
 // use
 Vue.use(mavonEditor)
@@ -56,6 +57,7 @@ router.beforeEach((to, from, next) => {
 })
 
 new Vue({
+    axios,//注册axios
     router,
     render: h => h(App)
 }).$mount('#app')
