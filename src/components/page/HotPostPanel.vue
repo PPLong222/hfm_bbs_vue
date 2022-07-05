@@ -5,7 +5,7 @@
 
     <div class="hot-post-panel-left">
       <el-carousel class="hot-post-carousel" height="320px">
-        <el-carousel-item v-for="hotPost of hotPostList" :hotPost="hotPost">
+        <el-carousel-item v-for="hotPost of mainHotPostList" :hotPost="hotPost">
           <a :href="hotPost.url">
             <el-image :fit="cover" :src="hotPost.cover" class="hot-post-img">
               <el-image slot="placeholder" :src="require('@/assets/images/image_loading.gif')" class="image-slot"/>
@@ -21,7 +21,6 @@
           <a :href="hotPost.url">
             <div class="hot-post-desc">{{ hotPost.description }}</div>
           </a>
-
           <!--          <img class="hot-post-img" src="http://www.pplong.top/gallery/covers/wallhaven-z85wpg.png"/>-->
         </el-carousel-item>
         <!--        <div class="hot-post-title">如何实现elementUI如何实现elementUI如何实现elementUI如何实现elementUI如何实现elementUI</div>-->
@@ -31,24 +30,14 @@
 
     <div class="hot-post-panel-right">
 
-      <div class="single-simple-post">
-        <div class="single-simple-post-title">12312sssssssssssssssssssssssssssssssssssssss3</div>
-        <div class="single-simple-post-desc">12312sssssssssssssssssssssssssssssssssssssss34444444444</div>
-      </div>
+      <div v-for="subHotPost of subHotPost" :subHotPost="subHotPost" class="single-simple-post">
+        <a :href="subHotPost.url">
+          <div class="single-simple-post-title">{{ subHotPost.title }}</div>
+        </a>
+        <a :href="subHotPost.url">
+          <div class="single-simple-post-desc">{{ subHotPost.description }}</div>
+        </a>
 
-      <div class="single-simple-post">
-        <div class="single-simple-post-title">123123</div>
-        <div class="single-simple-post-desc">123123</div>
-      </div>
-
-      <div class="single-simple-post">
-        <div class="single-simple-post-title">123123</div>
-        <div class="single-simple-post-desc">123123</div>
-      </div>
-
-      <div class="single-simple-post">
-        <div class="single-simple-post-title">123123</div>
-        <div class="single-simple-post-desc">123123</div>
       </div>
     </div>
 
@@ -62,11 +51,10 @@ import {getHotPostList} from "@/api/api";
 export default {
   name: "HotPostPanel",
   created() {
-    getHotPostList(0, 0, 1, 3).then(res => {
+    getHotPostList().then(res => {
       if (this.utils.isRequestSuccess(res)) {
-        for (let i = 0; i < res.data.length; i++) {
-          this.hotPostList.push(res.data[i])
-        }
+        this.mainHotPostList = res.data.slice(0, 3)
+        this.subHotPost = res.data.slice(3, 7)
       }
     }).catch(err => {
       console.log(err)
@@ -75,7 +63,8 @@ export default {
 
   data() {
     return {
-      hotPostList: []
+      mainHotPostList: [],
+      subHotPost: []
     }
   }
 }

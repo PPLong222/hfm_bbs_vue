@@ -72,6 +72,10 @@ export default {
     "go-top": GoTop
   },
   created() {
+    let user = this.utils.getObjectFromLocalStorage("user")
+    if (user != null) {
+      this.user = user
+    }
   },
   mounted() {
     // 初始化时建立默认scroll, 并获取默认推荐列表
@@ -85,7 +89,11 @@ export default {
       curRequestPage: 1,
       isRequestEnd: false,
       isInRequest: false,
-      curIndex: 1
+      curIndex: 1,
+      user: {
+        languageField: 0,
+        category: 0
+      }
     }
   },
   methods: {
@@ -122,7 +130,7 @@ export default {
       }
     },
     updatePostList(func) {
-      func(0, 0, this.curRequestPage, 6).then(res => {
+      func(this.user.category, this.user.languageField, this.curRequestPage, 6).then(res => {
         console.log(res)
         for (let i in res.data) {
           this.curPostList.push(res.data[i])
@@ -147,7 +155,7 @@ export default {
           if (vue.utils.getScrollHeight() - 30 <= vue.utils.getWindowHeight() + vue.utils.getDocumentTop()) {
             // 请求一次后还没收到结果就不能再次请求
             vue.isInRequest = true
-            func(0, 0, vue.curRequestPage, 6).then(res => {
+            func(vue.user.category, vue.user.languageField, vue.curRequestPage, 6).then(res => {
               console.log(res)
               // 如果没有数据了
               if (res.data == null || res.data.length < 1) {

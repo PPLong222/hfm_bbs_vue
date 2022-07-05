@@ -12,7 +12,9 @@
       </el-row>
       <el-row>
         <el-col :offset="8" :span="8">
-          <el-button id="login-button" type="primary" v-on:click="onConfirmButtonClick">确认</el-button>
+          <el-button id="login-button" :loading="isLoading" type="primary" v-on:click="onConfirmButtonClick">
+            {{ buttonText }}
+          </el-button>
         </el-col>
       </el-row>
     </div>
@@ -22,36 +24,8 @@
 <script>
 import $ from 'jquery'
 import {confirmCode} from "@/api/api";
+import Cookies from "js-cookie";
 
-function onConfirmButtonClick() {
-  // 点击按钮后UI效果切换
-  let buttonDom = document.getElementById("login-button")
-  buttonDom.classList.add("is-loading")
-  buttonDom.innerText = "加载中"
-  let icon = document.createElement("i")
-  icon.classList.add("el-icon-loading")
-  buttonDom.appendChild(icon)
-  // 非空判断
-  let inputList = document.getElementsByClassName("code-input")
-  let code = ""
-  for (let i = 0; i < inputList.length; i++) {
-    code += inputList[i].value
-  }
-  if (code.length < 6) {
-    alert("输入格式有误")
-    return
-  }
-  // 进行网络请求
-  let email = this.$route.params.email
-  confirmCode(email, code).then(res => {
-    if (this.utils.isRequestSuccess(res)) {
-      // 暂时跳转到登录界面
-      this.$router.push("/login")
-    }
-  }).catch(err => {
-    console.log(err)
-  })
-}
 
 // 验证码输入自动跳转到下一个字符判断逻辑
 $(function () {
@@ -98,7 +72,67 @@ $(function () {
 export default {
   name: "EmailConfirmVue",
   methods: {
-    onConfirmButtonClick
+    onConfirmButtonClick() {
+      // 点击按钮后UI效果切换
+      this.isLoading = true
+      this.buttonText = "加载中"
+      // 非空判断
+      let inputList = document.getElementsByClassName("code-input")
+      let code = ""
+      for (let i = 0; i < inputList.length; i++) {
+        code += inputList[i].value
+      }
+      if (code.length < 6) {
+        this.$message({
+          message: "验证码输入格式有误",
+          type: "error",
+          center: true,
+        })
+        this.isLoading = false
+        this.buttonText = "确认"
+        return
+      }
+      // 进行网络请求
+      let email = this.$route.params.email
+      confirmCode(email, code).then(res => {
+        if (this.utils.isRequestSuccess(res)) {
+          this.$message({
+            message: "验证成功",
+            type: "success",
+            center: true
+          })
+          this.utils.clearCookieByName("token")
+          // 保存cookie 并 跳转到用户个性化界面
+          let token = res.data.token
+          let user = res.data.user
+          if (token != null) {
+            // 使用js-cookie来传， 默认token过期时间是一天
+            Cookies.set('token', token, {expires: 1})
+          }
+          if (user != null) {
+            this.utils.setObjectToLocalStorage("user", user)
+          }
+          // 登录成功
+          this.$router.push("/index")
+        } else {
+          this.$message({
+            message: "验证码输入错误",
+            type: "error",
+            center: true,
+          })
+          this.isLoading = false
+          this.buttonText = "确认"
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  data() {
+    return {
+      isLoading: false,
+      buttonText: "确认"
+    }
   }
 }
 </script>
@@ -111,7 +145,7 @@ export default {
   margin-right: auto;
   max-width: 1000px;
   height: 500px;
-  background-color: white;
+  background-color: #ffffffd4;
   text-align: center;
   overflow: auto;
   border-radius: 10px;

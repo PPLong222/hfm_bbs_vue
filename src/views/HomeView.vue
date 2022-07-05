@@ -60,8 +60,7 @@ export default {
           console.log(err)
         }
         if (data) {
-          this.imageUrl = "https:// " + data.Location
-          console.log(data)
+          this.imageUrl = "https://" + data.Location
         }
       })
     }

@@ -24,14 +24,36 @@
 
 <script>
 import $ from 'jquery'
+import {followSingleUser, unfollowSingleUser} from "@/api/api";
 
 export default {
   name: "SearchUserPanel",
   methods: {
     onFollowerButtonClick(e) {
+      console.log("follow")
+      let userId = this.utils.getObjectFromLocalStorage("user").id
+      followSingleUser(this.user.id, userId).then(res => {
+        if (this.utils.isRequestSuccess(res)) {
+          this.user.isFollowed = true
+          console.log("ok")
+        }
+      }).catch(err => {
 
+      })
     },
     onUnFollowerButtonClick(e) {
+      console.log("unfollow")
+      let userId = this.utils.getObjectFromLocalStorage("user").id
+      console.log(this.user.id)
+      unfollowSingleUser(this.user.id, userId).then(res => {
+        console.log(res)
+        if (this.utils.isRequestSuccess(res)) {
+          this.user.isFollowed = false
+          console.log("ok")
+        }
+      }).catch(err => {
+        console.log(err)
+      })
 
     },
     onFollowMouseEnter(e) {

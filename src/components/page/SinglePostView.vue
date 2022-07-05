@@ -83,6 +83,7 @@ export default {
 
 .iconfont {
   font-size: 24px;
+  color: #e34241;
 }
 
 .icon-text {
