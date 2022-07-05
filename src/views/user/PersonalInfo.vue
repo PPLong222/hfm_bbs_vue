@@ -10,6 +10,7 @@
 <!--            <a class="select-text" index="0" @click="onSelectMenuClick($event)">我的文章</a>-->
             <span class="select-text" index="1" @click="onSelectMenuClick($event)">我的文章</span>
             <span class="select-text" index="2" @click="onSelectMenuClick($event)">我的关注</span>
+            <span class="select-text" index="3" @click="onSelectMenuClick($event)">关注我的</span>
           </div>
           <div v-if="curIndex===1" class="post-list">
             <x-single-post-view v-for="post of curPostList" v-bind:key="post.id"
@@ -19,7 +20,11 @@
 <!--            <top-post-list-panel v-for="post of curPostList" v-bind:key="post.id" :index="curPostList.indexOf(post)"-->
 <!--                                 :post="post"></top-post-list-panel>-->
 <!--          </div>-->
-          <div v-if="curIndex===1" class="user-list">
+          <div v-if="curIndex===2" class="user-list">
+            <search-user-panel v-for="user of userList" v-bind:key="user.id"
+                               :user="user"></search-user-panel>
+          </div>
+          <div v-if="curIndex===3" class="user-list">
             <search-user-panel v-for="user of userList" v-bind:key="user.id"
                                :user="user"></search-user-panel>
           </div>
@@ -79,7 +84,14 @@
 import CategoryPanel from "@/components/page/CategoryPanel";
 import HotPostPanel from "@/components/page/HotPostPanel";
 import SinglePostView from "@/components/page/SinglePostView";
-import {getHotPostList, getRecommendPostList, getUserById} from "@/api/api";
+import {
+  getHotPostList,
+  getRecommendPostList,
+  getUserById,
+  getUserFollowers,
+  getUserFollowees,
+  deletePostById
+} from "@/api/api";
 import LanguagePanel from "@/components/page/LanguagePanel";
 import {languages} from "@/utils/utils";
 import Header from "@/components/post/Header";
@@ -114,7 +126,8 @@ export default {
   },
   data() {
     return {
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+      // user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+      user:{},
       curPostList: [],
       languages: languages,
       curRequestPage: 1,
@@ -122,12 +135,13 @@ export default {
       isInRequest: false,
       curIndex: 1,
       info: '',
-      userList: ''
+      userList:[]
     }
   },
   methods: {
     getUserById(){
-      const id = this.user.id
+      this.user.id = this.$route.params.id
+      let id = this.$route.params.id;
       if(!id){
         this.$message.error("当前无法获取用户信息")
         return
@@ -146,6 +160,7 @@ export default {
       this.curRequestPage = 1
       this.isRequestEnd = false
       this.curPostList = []
+      this.userList = []
       // 设置字体颜色
       console.log(this.curIndex)
       document.getElementsByClassName("select-text")[this.curIndex-1].style.color = "#141514"
@@ -155,6 +170,41 @@ export default {
 
       this.onIndexChange()
 
+    },
+    getUserFollowers(){
+      getUserFollowers(this.user.id).then((res)=>{
+        if(res.status === 200 && res.data.data != null){
+          this.userList = res.data.data
+          console.log(this.userList)
+          // var user = {}
+          // for(user in this.userList){
+          //   console.log(user)
+          //   user.url = 'person/info/' + user.id
+          // }
+          for(var i = 0; i < this.userList.length; i++){
+            this.userList[i].url = '/person/info/' + this.userList[i].id
+          }
+        }else if(res.status === 200 && res.data.data == null){
+          this.$message.error("您还没有关注")
+        }else{
+          this.$message.error("获取列表出错")
+        }
+      })
+    },
+    getUserFollowees(){
+      getUserFollowees(this.user.id).then((res)=>{
+        if(res.status === 200 && res.data.data != null){
+          this.userList = res.data.data
+          console.log(this.userList)
+          for(var i = 0; i < this.userList.length; i++){
+            this.userList[i].url = '/person/info/' + this.userList[i].id
+          }
+        }else if(res.status === 200 && res.data.data == null){
+          this.$message.error("还没有人关注您")
+        }else{
+          this.$message.error("获取列表出错")
+        }
+      })
     },
     onIndexChange() {
       // 请求对应接口并改变scroll监听函数
@@ -166,7 +216,14 @@ export default {
           break;
         case 2:
           // 请求我的关注接口
-          this.updatePostList(getHotPostList)
+          // this.updatePostList(getHotPostList)
+          this.getUserFollowers()
+          this.changeWindowScroll(getHotPostList)
+          break;
+        case 3:
+          // 请求我的关注接口
+          // this.updatePostList(getHotPostList)
+          this.getUserFollowees()
           this.changeWindowScroll(getHotPostList)
           break;
       }
@@ -174,7 +231,6 @@ export default {
     updateMyPosts(){
 
       this.curPostList = this.info.posts
-      console.log(this.curPostList)
     },
     updatePostList(func) {
       func(0, 0, this.curRequestPage, 6).then(res => {

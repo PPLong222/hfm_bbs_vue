@@ -1,9 +1,13 @@
 <template>
   <div class="user-container">
-    <el-image :src="user.avatar" class="user-avatar">
-    </el-image>
+    <a :href="user.url" target="_blank" style=" text-decoration: none;">
+      <el-image :src="user.avatar" class="user-avatar">
+      </el-image>
+    </a>
     <div class="user-info">
-      <div class="nickname">{{ user.nickName }}</div>
+      <a :href="user.url" target="_blank" style=" text-decoration: none;">
+        <div class="nickname">{{ user.nickName }}</div>
+      </a>
       <div class="user-tail">
         <span class="tail-text">原创 {{ user.postCount }}</span>
         <span class="tail-text next">阅读 {{ user.totalView }}</span>
@@ -122,4 +126,9 @@ export default {
   color: #8590a6;
   margin-right: 20px;
 }
+
+a:link {color: black} /* 未被访问的链接 蓝色 */
+a:visited {color: black} /* 已被访问过的链接 蓝色 */
+a:hover {color: #606a78} /* 鼠标悬浮在上的链接 蓝色 */
+a:active {color: #606a78} /* 鼠标点中激活链接 蓝色 */
 </style>

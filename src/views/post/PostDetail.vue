@@ -64,15 +64,49 @@
 
             <div class="me-view-tag">
               标签：
-              <!--<el-tag v-for="t in post.tags" :key="t.id" class="me-view-tag-item" size="mini" type="success">{{t.tagName}}</el-tag>-->
-              <el-button @click="tagOrCategory('tag', t.id)" size="mini" type="primary" v-for="t in post.tags" :key="t.id" round plain>{{t.tagName}}</el-button>
+              <el-tag
+                  style="text-align: center; margin-right: 10px"
+                  v-for="tag in post.tags"
+                  :key="tag"
+                  :disable-transitions="false"
+                  @close="handleCloseCategory(tag)">
+                {{ tag.tagName }}
+              </el-tag>
             </div>
-
-  <!--          <div class="me-view-tag">-->
-  <!--            文章分类：-->
-  <!--            &lt;!&ndash;<span style="font-weight: 600">{{post.category.categoryName}}</span>&ndash;&gt;-->
-  <!--            <el-button @click="tagOrCategory('category', post.category.id)" size="mini" type="primary" round plain>{{post.category.categoryName}}</el-button>-->
-  <!--          </div>-->
+<!--            <div class="me-view-tag">-->
+<!--              标签：-->
+<!--              &lt;!&ndash;<el-tag v-for="t in post.tags" :key="t.id" class="me-view-tag-item" size="mini" type="success">{{t.tagName}}</el-tag>&ndash;&gt;-->
+<!--              <el-button @click="tagOrCategory('tag', t.id)" size="mini" type="primary" v-for="t in post.tags" :key="t.id" round plain>{{t.tagName}}</el-button>-->
+<!--            </div>-->
+            <div class="me-view-tag">
+              分类：
+              <el-tag
+                  style="text-align: center; margin-right: 10px"
+                  type="success"
+                  v-for="categoryChoose in checkedCategories"
+                  :key="categoryChoose"
+                  :disable-transitions="false"
+                  @close="handleCloseCategory(categoryChoose)">
+                {{ categoryChoose }}
+              </el-tag>
+            </div>
+            <div class="me-view-tag">
+              语言：
+              <el-tag
+                  style="text-align: center; margin-right: 10px"
+                  type="warning"
+                  v-for="languageChoose in checkedLanguages"
+                  :key="languageChoose"
+                  :disable-transitions="false"
+                  @close="handleCloseCategory(languageChoose)">
+                {{ languageChoose }}
+              </el-tag>
+            </div>
+<!--            <div class="me-view-tag">-->
+<!--              文章分类：-->
+<!--              &lt;!&ndash;<span style="font-weight: 600">{{post.category.categoryName}}</span>&ndash;&gt;-->
+<!--              <el-button @click="tagOrCategory('category', post.category.id)" size="mini" type="primary" round plain>{{post.category.categoryName}}</el-button>-->
+<!--            </div>-->
 
             <div class="me-view-comment">
               <div class="me-view-comment-write">
@@ -127,8 +161,7 @@
 </template>
 
 <script>
-import {findPostById, publishComment} from "@/api/api";
-import {getCommentsByPost, deletePostById} from "@/api/api";
+import {deletePostById, findPostById, getCommentsByPost, publishComment, submitPostInfo} from "@/api/api";
 import 'github-markdown-css/github-markdown.css';
 import MarkdownEditor from "@/components/markdown/MarkdownEditor";
 import VueMarkdown from 'vue-markdown';
@@ -136,12 +169,48 @@ import Header from "@/components/post/Header";
 import CommentItem from "@/components/comment/CommentItem";
 import GoTop from "@/components/gotop/GoTop";
 
+const categoryOptions = ['前端', '后端', '数据库', '操作系统', '网络', '游戏', '大数据', '人工智能', '测试', '安全', '小程序', '软件工程'];
+const languageOptions = ['C++', 'Dart', 'Python', 'Javascript',
+  'iOS', 'Java', 'Kotlin', 'Android',
+  'CSS', 'HTML', 'Swift', 'Csharp',
+  'Rust', 'Go', 'C'];
+
+const C = 1;
+const CPP = 1 << 1;
+const JAVA = 1 << 2;
+const PYTHON = 1 << 3;
+const JAVASCRIPT = 1 << 4;
+const HTML = 1 << 5;
+const CSS = 1 << 6;
+const CSHARP = 1 << 7;
+const RUST = 1 << 8;
+const GO = 1 << 8;
+const ANDROID = 1 << 10;
+const KOTLIN = 1 << 11;
+const SWIFT = 1 << 12;
+const IOS = 1 << 13;
+const DART = 1 << 14;
+
+const FRONT_END = 1;
+const BACK_END = 1 << 1;
+const DATABASE = 1 << 2;
+const OS = 1 << 3;
+const NETWORK = 1 << 4;
+const GAME = 1 << 5;
+const BIG_DATA = 1 << 6;
+const AI = 1 << 7;
+const TEST = 1 << 8;
+const SECURITY = 1 << 8;
+const APPLET = 1 << 10;
+const SOFTWARE_ENGINEER = 1 << 11;
+
 export default {
   name: 'BlogView',
   created() {
     console.log(this.post.author)
     console.log(this.user.id)
     this.findPostById();
+    console.log(this.post.category)
     this.findCommentList();
   },
   data() {
@@ -156,7 +225,8 @@ export default {
           // nickName: ''
         },
         tags: [],
-        category:{},
+        category: 0,
+        languageField: 0,
         createTime: '',
         content: '',
         cover: '',
@@ -176,6 +246,10 @@ export default {
       avatar: '',
       default_avatar: require('@/assets/icon/icon_github.png'),
       user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+      categories: categoryOptions,
+      languages: languageOptions,
+      checkedCategories: [],
+      checkedLanguages: []
     }
   },
   computed: {
@@ -192,6 +266,98 @@ export default {
     }
   },
   methods: {
+    reshowLanguage(_this, languageData) {
+      console.log("come to ========================>reshowLanguage")
+      if ((languageData & C) === C) {
+        _this.checkedLanguages.push("C");
+      }
+      if ((languageData & CPP) === CPP) {
+        _this.checkedLanguages.push("C++");
+      }
+      if ((languageData & JAVA) === JAVA) {
+        _this.checkedLanguages.push("Java");
+      }
+      if ((languageData & PYTHON) === PYTHON) {
+        _this.checkedLanguages.push("Python");
+      }
+      if ((languageData & JAVASCRIPT) === JAVASCRIPT) {
+        _this.checkedLanguages.push("Javascript");
+      }
+      if ((languageData & HTML) === HTML) {
+        _this.checkedLanguages.push("HTML");
+      }
+      if ((languageData & CSS) === CSS) {
+        _this.checkedLanguages.push("CSS");
+      }
+      if ((languageData & CSHARP) === CSHARP) {
+        _this.checkedLanguages.push("Csharp");
+      }
+      if ((languageData & RUST) === RUST) {
+        _this.checkedLanguages.push("Rust");
+      }
+      if ((languageData & GO) === GO) {
+        _this.checkedLanguages.push("Go");
+      }
+      if ((languageData & ANDROID) === ANDROID) {
+        _this.checkedLanguages.push("Android");
+      }
+      if ((languageData & KOTLIN) === KOTLIN) {
+        _this.checkedLanguages.push("Kotlin");
+      }
+      if ((languageData & SWIFT) === SWIFT) {
+        _this.checkedLanguages.push("Swift");
+      }
+      if ((languageData & IOS) === IOS) {
+        _this.checkedLanguages.push("iOS");
+      }
+      if ((languageData & DART) === DART) {
+        _this.checkedLanguages.push("Dart");
+      }
+    },
+    //回显分类
+    reshowCategory(_this, categoryData) {
+      if ((categoryData & FRONT_END) === FRONT_END) {
+        _this.checkedCategories.push("前端")
+      }
+      if ((categoryData & BACK_END) === BACK_END) {
+        _this.checkedCategories.push("后端")
+      }
+      if ((categoryData & DATABASE) === DATABASE) {
+        _this.checkedCategories.push("数据库")
+      }
+      if ((categoryData & OS) === OS) {
+        _this.checkedCategories.push("操作系统")
+      }
+      if ((categoryData & NETWORK) === NETWORK) {
+        _this.checkedCategories.push("网络")
+      }
+      if ((categoryData & GAME) === GAME) {
+        _this.checkedCategories.push("游戏")
+      }
+      if ((categoryData & BIG_DATA) === BIG_DATA) {
+        _this.checkedCategories.push("大数据")
+      }
+      if ((categoryData & AI) === AI) {
+        _this.checkedCategories.push("人工智能")
+      }
+      if ((categoryData & TEST) === TEST) {
+        _this.checkedCategories.push("测试")
+      }
+      if ((categoryData & SECURITY) === SECURITY) {
+        _this.checkedCategories.push("安全")
+      }
+      if ((categoryData & APPLET) === APPLET) {
+        _this.checkedCategories.push("小程序")
+      }
+      if ((categoryData & FRONT_END) === FRONT_END) {
+        _this.checkedCategories.push("软件工程")
+      }
+
+    },
+    //动态生成分类标签
+    handleCloseCategory(tag) {
+      this.checkedCategories.splice(this.checkedCategories.indexOf(tag), 1);
+    },
     deletePost(){
       deletePostById(this.post.id).then((res)=>{
         console.log(res)
@@ -214,16 +380,21 @@ export default {
     },
     findPostById() {
       var id = this.$route.params.id;
+      let _this = this
       //发起http请求 请求后端的数据
-      findPostById(id).then((res)=>{
+      findPostById(id).then((res) => {
         console.log(res)
-        if(res.data.success){
-            this.post.author = res.data.data.author
-            this.post.editor.value = res.data.data.content;
-            Object.assign(this.post,res.data.data)
-          }else{
-            this.$message.error(res.data.msg);
-          }
+        if (res.data.success) {
+          this.post.author = res.data.data.author
+          // console.log(this.post.author)
+          this.post.editor.value = res.data.data.content
+          Object.assign(this.post, res.data.data)
+          console.log(this.post)
+          this.reshowCategory(_this,this.post.category)
+          this.reshowLanguage(_this,this.post.languageField)
+        } else {
+          this.$message.error(res.data.msg);
+        }
       }).catch((err)=>{
         this.$message.error("系统错误");
       }).finally(()=>{
@@ -243,6 +414,9 @@ export default {
       }).finally(()=>{
       })
     },
+    flushed(){
+      this.$router.go(0)
+    },
     publishComment() {
       let that = this
       if (!that.comment.content) {
@@ -257,7 +431,8 @@ export default {
           that.comment.content = ''
           that.comments.unshift(data.data)
           that.commentCountsIncrement()
-
+          this.submitPostInfo()
+          setTimeout(this.flushed,2000)
         }else{
           that.$message({type: 'error', message: data.msg, showClose: true})
         }
@@ -268,7 +443,9 @@ export default {
         }
       })
     },
-
+    submitPostInfo(){
+      submitPostInfo(this.post,null)
+    },
     getCommentsByPost() {
       let that = this
       getCommentsByPost(that.post.id).then(data => {
@@ -284,7 +461,7 @@ export default {
       })
     },
     commentCountsIncrement() {
-      this.post.commentCounts += 1
+      this.post.commentCount += 1
     }
   },
   components: {
@@ -430,4 +607,7 @@ export default {
   margin: 0 auto;
 }
 
+.spacing {
+  margin-top: 10px;
+}
 </style>

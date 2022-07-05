@@ -89,4 +89,17 @@ export function deletePostById(id) {
     })
 }
 
+export function getUserFollowers(id) {
+    return request({
+        url: `/userInfo/getUserFollowers/${id}`,
+        method: 'post'
+    })
+}
+
+export function getUserFollowees(id) {
+    return request({
+        url: `/userInfo/getUserFollowees/${id}`,
+        method: 'post'
+    })
+}
 
