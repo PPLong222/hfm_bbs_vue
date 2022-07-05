@@ -31,14 +31,22 @@
                 </div>
 
               </div>
-              <!--v-if="this.post.author.id == this.$store.state.id"-->
-  <!--            <el-button-->
-  <!--                @click="editpost()"-->
-  <!--                style="position: absolute;left: 60%;"-->
-  <!--                size="mini"-->
-  <!--                round-->
-  <!--                icon="el-icon-edit"-->
-  <!--            >编辑</el-button>-->
+              <el-button
+                  v-if="this.post.author.id == this.user.id"
+                  @click="editpost()"
+                  style="position: absolute;left: 80%;"
+                  size="mini"
+                  round
+                  icon="el-icon-edit"
+              >编辑</el-button>
+              <el-button
+                  v-if="this.post.author.id == this.user.id"
+                  @click="deletePost()"
+                  style="position: absolute;left: 90%;"
+                  size="mini"
+                  round
+                  icon="el-icon-edit"
+              >删除</el-button>
             </div>
             <div class="me-view-content">
   <!--            <markdown-editor :editor=post.editor></markdown-editor>-->
@@ -131,6 +139,8 @@ import GoTop from "@/components/gotop/GoTop";
 export default {
   name: 'BlogView',
   created() {
+    console.log(this.post.author)
+    console.log(this.user.id)
     this.findPostById();
     this.findCommentList();
   },
@@ -143,7 +153,7 @@ export default {
         views: 0,
         summary: '',
         author: {
-          nickName: ''
+          // nickName: ''
         },
         tags: [],
         category:{},
@@ -182,6 +192,9 @@ export default {
     }
   },
   methods: {
+    deletePost(){
+
+    },
     tagOrCategory(type, id) {
       this.$router.push({path: `/${type}/${id}`})
     },
@@ -192,7 +205,9 @@ export default {
       var id = this.$route.params.id;
       //发起http请求 请求后端的数据
       findPostById(id).then((res)=>{
-          if(res.data.success){
+        console.log(res)
+        if(res.data.success){
+            this.post.author = res.data.data.author
             this.post.editor.value = res.data.data.content;
             Object.assign(this.post,res.data.data)
           }else{
@@ -226,7 +241,6 @@ export default {
 
       let parms = {authorId: this.user.id,postId:that.post.id,content:that.comment.content}
       publishComment(parms).then(data => {
-        console.log(data)
         if(data.status === 200){
           that.$message({type: 'success', message: '评论成功', showClose: true})
           that.comment.content = ''
