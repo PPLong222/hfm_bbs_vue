@@ -23,6 +23,9 @@ export default {
     setObjectToLocalStorage(key, value) {
         window.localStorage.setItem(key, JSON.stringify(value))
     },
+    removeObjectFromLocalStorage(key) {
+        window.localStorage.removeItem(key)
+    },
     getObjectFromLocalStorage(key) {
         return JSON.parse(window.localStorage.getItem(key))
     },

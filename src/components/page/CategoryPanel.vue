@@ -66,6 +66,8 @@ export default {
   display: inline-block;
   text-decoration: none;
   color: #8c8c93;
+  cursor: pointer;
+
 }
 
 .category-item:hover {
