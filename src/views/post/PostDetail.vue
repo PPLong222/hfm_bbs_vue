@@ -128,7 +128,7 @@
 
 <script>
 import {findPostById, publishComment} from "@/api/api";
-import {getCommentsByPost} from "@/api/api";
+import {getCommentsByPost, deletePostById} from "@/api/api";
 import 'github-markdown-css/github-markdown.css';
 import MarkdownEditor from "@/components/markdown/MarkdownEditor";
 import VueMarkdown from 'vue-markdown';
@@ -193,13 +193,24 @@ export default {
   },
   methods: {
     deletePost(){
-
+      deletePostById(this.post.id).then((res)=>{
+        console.log(res)
+        if(res.status === 200){
+          this.$message({type: 'success', message: '删除成功', showClose: true})
+          setTimeout(this.backToLastPage,2000)
+        }else{
+          this.$message.error("删除失败")
+        }
+      })
+    },
+    backToLastPage(){
+      this.$router.go(-1);
     },
     tagOrCategory(type, id) {
       this.$router.push({path: `/${type}/${id}`})
     },
     editpost() {
-      this.$router.push({path: `/write/${this.post.id}`})
+      this.$router.push({path: `/post/${this.post.id}/edit`})
     },
     findPostById() {
       var id = this.$route.params.id;

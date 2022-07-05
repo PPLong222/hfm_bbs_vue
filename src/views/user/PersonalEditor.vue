@@ -102,7 +102,6 @@ export default {
         this.form.description = res.data.data.description
         this.form.nickName = res.data.data.nickName
         this.form.sex = res.data.data.sex ? '女' : '男'
-        console.log(this.form.sex)
       })
     },
 

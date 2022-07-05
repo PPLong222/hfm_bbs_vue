@@ -80,4 +80,11 @@ export const searchUserByNickName = (name, userId, pageIndex, pageNum) => get("/
     pageNum
 })
 
+export function deletePostById(id) {
+    return request({
+        url: `/post/del/${id}`,
+        method: 'get'
+    })
+}
+
 

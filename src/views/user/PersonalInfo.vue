@@ -15,9 +15,13 @@
             <x-single-post-view v-for="post of curPostList" v-bind:key="post.id"
                               :post="post"></x-single-post-view>
           </div>
-          <div v-if="curIndex===2" class="post-list">
-            <top-post-list-panel v-for="post of curPostList" v-bind:key="post.id" :index="curPostList.indexOf(post)"
-                                 :post="post"></top-post-list-panel>
+<!--          <div v-if="curIndex===2" class="post-list">-->
+<!--            <top-post-list-panel v-for="post of curPostList" v-bind:key="post.id" :index="curPostList.indexOf(post)"-->
+<!--                                 :post="post"></top-post-list-panel>-->
+<!--          </div>-->
+          <div v-if="curIndex===1" class="user-list">
+            <search-user-panel v-for="user of userList" v-bind:key="user.id"
+                               :user="user"></search-user-panel>
           </div>
           <el-image v-if="!isRequestEnd" :src="require('@/assets/images/loading.gif')" alt="" class="loading-gif"/>
         </div>
@@ -82,6 +86,7 @@ import Header from "@/components/post/Header";
 import TopPostListPanel from "@/components/page/TopPostListPanel";
 import TopAuthorPanel from "@/components/page/TopAuthorPanel";
 import XSinglePostView from "@/components/page/XSinglePostView";
+import SearchUserPanel from "@/components/user/SearchUserPanel";
 
 import GoTop from "@/components/gotop/GoTop";
 
@@ -96,7 +101,8 @@ export default {
     HotPostPanel,
     SinglePostView,
     "go-top": GoTop,
-    "x-single-post-view": XSinglePostView
+    "x-single-post-view": XSinglePostView,
+    SearchUserPanel
   },
   created() {
     this.getUserById()
@@ -115,7 +121,8 @@ export default {
       isRequestEnd: false,
       isInRequest: false,
       curIndex: 1,
-      info: ''
+      info: '',
+      userList: ''
     }
   },
   methods: {
