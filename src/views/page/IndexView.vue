@@ -4,7 +4,7 @@
     <Header></Header>
     <div class="content-body">
       <div class="content-left">
-        <category-panel class="category-panel"></category-panel>
+        <category-panel :categories="categories" class="category-panel"></category-panel>
         <hot-post-panel class="hot-post-panel"></hot-post-panel>
         <div class="main-content">
 
@@ -27,6 +27,9 @@
 
       </div>
       <div class="content-right">
+        <div class="right-normal-panel">
+          <register :user-name=user.username></register>
+        </div>
         <div class="right-normal-panel">
           <div class="right-float-subject-title">网站公告</div>
           <div class="right-float-subject-content">这是网站内容</div>
@@ -52,16 +55,17 @@ import HotPostPanel from "@/components/page/HotPostPanel";
 import SinglePostView from "@/components/page/SinglePostView";
 import {getHotPostList, getRecommendPostList} from "@/api/api";
 import LanguagePanel from "@/components/page/LanguagePanel";
-import {languages} from "@/utils/utils";
+import {categories, languages} from "@/utils/utils";
 import Header from "@/components/post/Header";
 import TopPostListPanel from "@/components/page/TopPostListPanel";
 import TopAuthorPanel from "@/components/page/TopAuthorPanel";
-
+import Register from "@/components/widgets/register";
 import GoTop from "@/components/gotop/GoTop";
 
 export default {
   name: "IndexView",
   components: {
+    Register,
     TopAuthorPanel,
     TopPostListPanel,
     Header,
@@ -76,6 +80,7 @@ export default {
     if (user != null) {
       this.user = user
     }
+    this.user.username = user.userName
   },
   mounted() {
     // 初始化时建立默认scroll, 并获取默认推荐列表
@@ -86,13 +91,15 @@ export default {
     return {
       curPostList: [],
       languages: languages,
+      categories: categories,
       curRequestPage: 1,
       isRequestEnd: false,
       isInRequest: false,
       curIndex: 1,
       user: {
         languageField: 0,
-        category: 0
+        category: 0,
+        username: ''
       }
     }
   },

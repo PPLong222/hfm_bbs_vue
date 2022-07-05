@@ -1,23 +1,46 @@
 <template>
   <div id="category-panel" class="category-panel">
-    <!--    按理说这些元素应该通过list 由父组件传入，这里先写死-->
-    <a class="category-item" href="">前端</a>
-    <a class="category-item" href="">后端</a>
-    <a class="category-item" href="">数据库</a>
-    <a class="category-item" href="">操作系统</a>
-    <a class="category-item" href="">网络</a>
-    <a class="category-item" href="">游戏</a>
-    <a class="category-item" href="">人工智能</a>
-    <a class="category-item" href="">大数据</a>
-    <a class="category-item" href="">嵌入式</a>
-    <a class="category-item" href="">小程序</a>
-    <a class="category-item" href="">软件测试</a>
+    <span v-for="(value, key)  in categories" :value=value class="category-item"
+          v-on:click="onCategoryClick($event)">{{ key }}</span>
   </div>
+
 </template>
 
 <script>
+// 不设置随机颜色
+function setRandomColor() {
+  const language_color = ["#072448", "#54d2d2", "#ffcb00", "#f8aa4b", "#ff6150"]
+  let languageList = document.getElementsByClassName("language-item")
+  for (let element of languageList) {
+    let color = language_color[parseInt(Math.random() * 5)]
+    console.log(color)
+    element.style.color = color
+  }
+}
+
 export default {
-  name: "CategoryPanel"
+  name: "CategoryPanel",
+  props: {
+    categories: Object
+  },
+  mounted() {
+    this.$nextTick(function () {
+      // 仅在整个视图都被渲染之后才会运行的代码
+      // setRandomSize()
+      setRandomColor()
+    })
+  },
+  methods: {
+    onCategoryClick(e) {
+      console.log(e.target)
+      let category = e.target.getAttribute("value")
+      this.$router.push({
+        path: `/common/${category}/0`
+      })
+    }
+  }
+
+
 }
 </script>
 
