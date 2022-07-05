@@ -1,7 +1,7 @@
 <template>
   <div class="login">
-    <h1>Summti</h1>
-    <div class="sub-desc">一个干净纯粹的技术分享论坛</div>
+    <h1>Echo</h1>
+    <div class="sub-desc">一个干净、纯粹的技术分享论坛</div>
     <login-panel id="login-panel"></login-panel>
 
   </div>
@@ -25,12 +25,14 @@ h1 {
   margin: 0 auto;
   padding-top: 120px;
   width: fit-content;
+  letter-spacing: 3px;
+  font-size: 52px;
 }
 
 .sub-desc {
   margin: 10px auto;
   width: fit-content;
-
+  font-size: 20px;
 }
 
 .login {

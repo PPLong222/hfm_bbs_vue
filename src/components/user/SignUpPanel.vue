@@ -46,7 +46,8 @@ function onRegisterButtonClick() {
           }
         })
       } else {
-        this.isLoading = true
+        this.$message.error(res.msg)
+        this.isLoading = false
       }
     }).catch(err => {
       // 进行错误提示

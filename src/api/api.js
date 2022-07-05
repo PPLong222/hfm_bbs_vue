@@ -1,5 +1,4 @@
-import {get, post} from './request'
-import request from "./request";
+import request, {get, post} from './request'
 
 export const test = p => get("/test", p)
 
@@ -68,11 +67,21 @@ export const searchPostByWords = (category, languageField, words, pageIndex, pag
     pageNum
 })
 
-export const searchUserByNickName = (name, userId, pageIndex, pageNum) => get("/userInfo/searchUserByNicknameInPage", {
+export const searchUserByNickName = (name, userId, pageIndex, pageNum) => get("/user/searchUserByNickNameInPage", {
     name,
     userId,
     pageIndex,
     pageNum
 })
 
+export const unfollowSingleUser = (followeeId, followerId) => post("/user/unfollow", {
+    followeeId,
+    followerId
+})
 
+export const followSingleUser = (followeeId, followerId) => post("/user/follow", {
+    followeeId,
+    followerId
+})
+
+export const getTopAuthor = (limit) => get("/user/getTopAuthor", {limit})
