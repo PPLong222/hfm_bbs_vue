@@ -36,9 +36,8 @@ export function getCommentsByPost(id) {
     })
 }
 
-export function publishComment(comment,token) {
+export function publishComment(comment) {
     return request({
-        headers: {'Authorization': token},
         url: '/comments/create/change',
         method: 'post',
         data: comment
