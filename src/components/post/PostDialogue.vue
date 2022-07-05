@@ -225,6 +225,7 @@ export default {
 
       ruleForm: {
         id: '',
+        userId: '',
         title: '',
         description: '',
         content: '',
@@ -385,6 +386,7 @@ export default {
       // this.ruleForm.category=this.checkedCategories
       this.transformLanguage(this.checkedLanguages);
       this.transformCategory(this.checkedCategories);
+      this.ruleForm.userId = this.utils.getObjectFromLocalStorage("user").id;
       console.log("transform==============================>" + this.ruleForm.languageField);
       console.log("transform==============================>" + this.ruleForm.category);
       submitPostInfo(this.ruleForm, this.dynamicTags).then(res => {
