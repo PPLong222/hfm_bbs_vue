@@ -28,7 +28,7 @@
           <el-dropdown-item divided>
             <span v-show="!hasLogin"><el-link href="/login" type="primary"><i
                 class="el-icon-switch-button"></i>登录</el-link></span>
-            <span v-show="hasLogin"><el-link type="danger" @click="logout"><i
+            <span v-show="hasLogin"><el-link type="danger" @click="userLogout"><i
                 class="el-icon-switch-button"></i>退出</el-link></span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import {logout} from "@/api/api";
 
 export default {
   name: "Header",
@@ -69,8 +70,18 @@ export default {
     }
   },
   methods: {
-    logout() {
-      const _this = this
+    userLogout() {
+      logout(this.username).then(res => {
+        if (this.utils.isRequestSuccess(res)) {
+          this.utils.removeObjectFromLocalStorage("user")
+          this.$message.success("成功登出")
+          window.location.reload()
+        } else {
+          this.$message.error("登出失败")
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     },
     // 搜索按钮点击时跳转的逻辑
     onSearchButtonClicked() {

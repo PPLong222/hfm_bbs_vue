@@ -3,6 +3,9 @@ import request, {get, post} from './request'
 export const test = p => get("/test", p)
 
 
+export const logout = (userName) =>
+    post("/user/logout", {userName})
+
 export const login = (userName, password) =>
     post("/user/login", {userName, password})
 
