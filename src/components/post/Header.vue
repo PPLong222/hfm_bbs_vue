@@ -2,7 +2,7 @@
   <div class="m-content">
     <!--    <h3>欢迎来到您的博客</h3>-->
     <div style="float: left;margin-left: 5%">
-      <span class="aspect"><el-link href="/"><h2 style="color: #06f">主页</h2></el-link></span>
+      <span class="aspect"><el-link href="/posts"><h2 style="color: #06f">主页</h2></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>下载·课程</h3></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>学习</h3></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>社区</h3></el-link></span>
@@ -21,23 +21,21 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <span class="username_style">{{ user.username }}</span>
-          <el-divider direction="horizontal"></el-divider>
-          <el-dropdown-item>黄金糕</el-dropdown-item>
-          <el-dropdown-item>螺蛳粉</el-dropdown-item>
-          <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-          <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-          <el-dropdown-item>
-            <span v-show="!hasLogin"><el-link href="/login" type="primary">登录</el-link></span>
-            <span v-show="hasLogin"><el-link type="danger" @click="logout">退出</el-link></span>
+          <el-dropdown-item divided><i class="el-icon-user-solid"></i>个人主页</el-dropdown-item>
+          <el-dropdown-item><i class="el-icon-edit"></i>创作中心</el-dropdown-item>
+          <el-dropdown-item><i class="el-icon-s-opportunity"></i>无障碍</el-dropdown-item>
+          <el-dropdown-item><i class="el-icon-s-tools"></i>设置</el-dropdown-item>
+          <el-dropdown-item divided>
+            <span v-show="!hasLogin"><el-link href="/login" type="primary"><i
+                class="el-icon-switch-button"></i>登录</el-link></span>
+            <span v-show="hasLogin"><el-link type="danger" @click="logout"><i
+                class="el-icon-switch-button"></i>退出</el-link></span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
 
-    <!--    <div>{{user.username}}</div>-->
     <div class="m-action">
-      <!--      <span><el-link href="/posts">主页</el-link></span>-->
-      <!--      <el-divider direction="vertical"></el-divider>-->
       <span><el-link href="/post/add"><i class="el-icon-edit el-icon-style"></i></el-link></span>
       <el-divider direction="vertical"></el-divider>
       <span><el-link href="/post/add"><i class="el-icon-bell el-icon-style"></i></el-link></span>
@@ -73,14 +71,6 @@ export default {
   methods: {
     logout() {
       const _this = this
-      _this.$axios.get("/logout", {
-        headers: {
-          "Authorization": localStorage.getItem("token")
-        }
-      }).then(res => {
-        _this.$store.commit("REMOVE_INFO")
-        _this.$router.push("/login")
-      })
     },
     // 搜索按钮点击时跳转的逻辑
     onSearchButtonClicked() {
@@ -92,13 +82,16 @@ export default {
     }
   },
   created() {
-    // if (this.$store.getters.getUser.username) {
-    //   this.user.username = this.$store.getters.getUser.username;
-    //   this.user.avatar = this.$store.getters.getUser.avatar;
-    //   this.hasLogin = true
-    // }
+    if (this.utils.getObjectFromLocalStorage("user")) {
+      this.user.username = this.utils.getObjectFromLocalStorage("user").userName;
+      this.user.avatar = this.utils.getObjectFromLocalStorage("user").avatar;
+      this.hasLogin = true
+    }
   }
 }
+// this.user.username = this.$store.getters.getUser.username;
+// this.user.avatar = this.$store.getters.getUser.avatar;
+// this.hasLogin = true
 
 </script>
 
@@ -115,7 +108,11 @@ export default {
 
 .username_style {
   color: #06f;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
+  margin-left: 25px;
+  font-weight: bold;
+  text-align: center
+
 }
 
 .m-action {
@@ -189,17 +186,8 @@ export default {
   border-bottom: 2px solid #06f;
 }
 
-/*.bar button {*/
-/*  background: none;*/
-/*  top: -2px;*/
-/*  line-height: 50px;*/
-/*  margin-right: 5px;*/
-/*  color: darkgray;*/
-/*}*/
-
-/*.bar button:before {*/
-/*  color: #06f;*/
-/*}*/
-
+.el-dropdown-menu {
+  width: 120px;
+}
 
 </style>
