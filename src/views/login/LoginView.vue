@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1>Echo</h1>
+    <h1>ECHO</h1>
     <div class="sub-desc">一个干净、纯粹的技术分享论坛</div>
     <login-panel id="login-panel"></login-panel>
 
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import LoginPanel from "@/components/user/LoginPanel";
 
 export default {
@@ -21,12 +22,14 @@ export default {
 </script>
 
 <style scoped>
+
 h1 {
   margin: 0 auto;
   padding-top: 120px;
   width: fit-content;
-  letter-spacing: 3px;
-  font-size: 52px;
+  letter-spacing: 10px;
+  font-size: 70px;
+  font-family: "Montserrat", serif;
 }
 
 .sub-desc {
@@ -47,5 +50,6 @@ h1 {
 #login-panel {
   margin: 40px auto;
 }
+
 
 </style>
