@@ -28,9 +28,9 @@
             <search-user-panel v-for="user of userList" v-bind:key="user.id"
                                :user="user"></search-user-panel>
           </div>
-          <el-image v-if="!isRequestEnd" :src="require('@/assets/images/loading.gif')" alt="" class="loading-gif"/>
+<!--          <el-image v-if="!isRequestEnd" :src="require('@/assets/images/loading.gif')" alt="" class="loading-gif"/>-->
         </div>
-        <div v-if="isRequestEnd" class="post-end-text">已经到底了</div>
+        <div class="post-end-text">已经到底了</div>
 
       </div>
       <div class="content-right">
@@ -84,14 +84,7 @@
 import CategoryPanel from "@/components/page/CategoryPanel";
 import HotPostPanel from "@/components/page/HotPostPanel";
 import SinglePostView from "@/components/page/SinglePostView";
-import {
-  getHotPostList,
-  getRecommendPostList,
-  getUserById,
-  getUserFollowers,
-  getUserFollowees,
-  deletePostById
-} from "@/api/api";
+import {getHotPostList, getUserById, getUserFollowees, getUserFollowers} from "@/api/api";
 import LanguagePanel from "@/components/page/LanguagePanel";
 import {languages} from "@/utils/utils";
 import Header from "@/components/post/Header";
@@ -200,7 +193,6 @@ export default {
             this.userList[i].url = '/person/info/' + this.userList[i].id
           }
         }else if(res.status === 200 && res.data.data == null){
-          this.$message.error("还没有人关注您")
         }else{
           this.$message.error("获取列表出错")
         }
@@ -212,13 +204,13 @@ export default {
         case 1:
           // 请求我的文章接口
           this.getUserById()
-          this.changeWindowScroll(getRecommendPostList)
+          //this.changeWindowScroll(getRecommendPostList)
           break;
         case 2:
           // 请求我的关注接口
           // this.updatePostList(getHotPostList)
           this.getUserFollowers()
-          this.changeWindowScroll(getHotPostList)
+          //this.changeWindowScroll(getHotPostList)
           break;
         case 3:
           // 请求我的关注接口

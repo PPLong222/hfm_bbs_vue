@@ -2,7 +2,7 @@
   <div class="m-content">
     <!--    <h3>欢迎来到您的博客</h3>-->
     <div style="float: left;margin-left: 5%">
-      <span class="aspect"><el-link href="/posts"><h2 style="color: #06f">主页</h2></el-link></span>
+      <span class="aspect"><el-link href="/index"><h2 style="color: #06f">主页</h2></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>下载·课程</h3></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>学习</h3></el-link></span>
       <span class="aspect"><el-link href="/posts"><h3>社区</h3></el-link></span>
@@ -21,7 +21,9 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <span class="username_style">{{ user.username }}</span>
-          <el-dropdown-item divided><i class="el-icon-user-solid"></i>个人主页</el-dropdown-item>
+          <el-dropdown-item divided>
+            <div @click="onPersonPageClick"><i class="el-icon-user-solid"></i>个人主页</div>
+          </el-dropdown-item>
           <el-dropdown-item><i class="el-icon-edit"></i>创作中心</el-dropdown-item>
           <el-dropdown-item><i class="el-icon-s-opportunity"></i>无障碍</el-dropdown-item>
           <el-dropdown-item><i class="el-icon-s-tools"></i>设置</el-dropdown-item>
@@ -90,6 +92,14 @@ export default {
           path: `/search/${this.input}`
         })
       }
+    },
+    onPersonPageClick() {
+      let id = parseInt(this.utils.getObjectFromLocalStorage("user").id);
+      console.log("ssss")
+      console.log(id)
+      this.$router.push({
+        path: `/person/info/${id}`
+      })
     }
   },
   created() {
