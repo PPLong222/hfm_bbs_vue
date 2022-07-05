@@ -12,7 +12,7 @@
     </el-alert>
     <div class="spacing">
       <div class="m-upload">
-        <Cropper @emitCover="getCoverUrl"></Cropper>
+        <Cropper :cover="ruleForm.cover" @emitCover="getCoverUrl"></Cropper>
         <el-input
             v-model="postDescription"
             :rows="7"
@@ -389,9 +389,16 @@ export default {
       console.log("transform==============================>" + this.ruleForm.category);
       submitPostInfo(this.ruleForm, this.dynamicTags).then(res => {
         console.log(res)
+        if (res.success) {
+          this.$message.success("新增文章成功！")
+          window.location.reload()
+        } else {
+          this.$message.error("新增文章失败！")
+        }
       }).catch(err => {
         console.log(err)
-      })
+      });
+
     },
 
     //处理封面
@@ -581,12 +588,14 @@ export default {
     if (postId) {
       //this.$axios.get('/post/' + postId).then(res => {
       showPostEdit(postId).then(res => {
-        const post = res.data
+        const post = res.data.postInfo
         _this.ruleForm.comment = post.comment
         _this.ruleForm.privacy = post.privacy
+        _this.ruleForm.cover = post.cover
         // _this.reshowCategory(post.category)
         _this.reshowLanguage(_this, post.languageField)
         _this.reshowCategory(_this, post.category)
+        _this.dynamicTags = res.data.tags
       })
     }
   }

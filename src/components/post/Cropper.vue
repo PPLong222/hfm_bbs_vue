@@ -86,6 +86,9 @@ const blobToFile = (blob, fileName) => {
 }
 export default {
   name: "Cropper",
+  props: {
+    cover: String
+  },
   data() {
     return {
       isPreview: false,
@@ -115,6 +118,12 @@ export default {
       loading: false,
       //用于存储图片的url
       url: ''
+    }
+  },
+  created() {
+    if (this.cover != null && this.cover.length > 0) {
+      this.previewImg = this.cover
+      this.isPreview = true
     }
   },
   methods: {
