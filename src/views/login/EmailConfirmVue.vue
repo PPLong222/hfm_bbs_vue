@@ -112,7 +112,6 @@ export default {
           if (user != null) {
             this.utils.setObjectToLocalStorage("user", user)
           }
-          console.log(this.utils.getObjectFromLocalStorage("user"))
           // 登录成功
           this.$router.push("/index")
         } else {
