@@ -89,7 +89,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/page/CommonPage')
   },
   {
-    path: '/person/info',
+    path: '/person/info/:id',
     component: PersonalInfo
   },
   {

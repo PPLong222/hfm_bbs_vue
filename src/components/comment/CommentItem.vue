@@ -5,15 +5,16 @@
         <img class="me-view-picture" :src="comment.author.avatar"></img>
       </a>
       <div class="me-view-info">
-        <span class="me-view-nickname">{{comment.author.nickName}}</span>
+        <span class="me-view-nickname" style="font-weight: bolder">{{comment.author.nickName}}</span>
         <div class="me-view-meta">
-          <span> {{rootCommentCounts - index}}楼 </span>
-          <span> {{comment.commentTime}} </span>
+          <span style="font-weight: lighter;font-size: smaller"> {{rootCommentCounts - index}}楼 </span>
+          <span style="font-weight: lighter;font-size: smaller"> {{comment.commentTime}} </span>
+          <span></span>
         </div>
       </div>
     </div>
     <div>
-      <p class="me-view-comment-content">{{comment.content}}</p>
+      <p class="me-view-comment-content" style="font-size: large">{{comment.content}}</p>
       <div class="me-view-comment-tools">
         <!--<a class="me-view-comment-tool">-->
         <!--<i class="el-icon-caret-top"></i> 20-->
@@ -30,10 +31,10 @@
 
             <span v-if="c.level == 2" class="me-reply-user">@{{c.toUser.nickName}} </span>
 
-            <span>{{c.content}}</span>
+            <span style="font-size: medium">{{c.content}}</span>
           </div>
           <div class="me-view-meta">
-            <span style="padding-right: 10px">{{c.commentTime}}</span>
+            <span style="font-weight: lighter;font-size: smaller">{{c.commentTime}}</span>
             <!--  <a class="me-view-comment-tool" @click="showComment(c.id, c.author)">
                 <i class="me-icon-comment"></i>&nbsp;回复
               </a> -->
@@ -105,6 +106,9 @@ export default {
         this.commentShowIndex = ''
       }
     },
+    flushed(){
+      this.$router.go(0)
+    },
     publishComment() {
       let that = this
       if (!that.reply.content) {
@@ -120,6 +124,7 @@ export default {
           that.comment.childrens.unshift(data.data)
           that.$emit('commentCountsIncrement')
           that.showComment(that.commentShowIndex)
+          setTimeout(this.flushed,2000)
         }else{
           that.$message({type: 'error', message: data.msg, showClose: true})
         }
