@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 
 export default {
   name: "register",
@@ -33,7 +32,6 @@ export default {
   methods: {
     register() {
       this.hasRegister = true
-      let now = moment();
     },
   },
 }
