@@ -40,6 +40,7 @@ export default {
         if (this.utils.isRequestSuccess(res)) {
           this.user.isFollowed = true
           console.log("ok")
+          window.location.reload()
         }
       }).catch(err => {
 
@@ -54,6 +55,7 @@ export default {
         if (this.utils.isRequestSuccess(res)) {
           this.user.isFollowed = false
           console.log("ok")
+          window.location.reload()
         }
       }).catch(err => {
         console.log(err)

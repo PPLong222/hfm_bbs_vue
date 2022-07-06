@@ -19,7 +19,7 @@
       <span class="icon-text">{{ post.stars }} 赞</span>
 
       <span class="iconfont icon-comment icon-next"></span>
-      <span class="icon-text">{{ post.commentCount }} 赞 条评论</span>
+      <span class="icon-text">{{ post.commentCount }} 条评论</span>
 
       <span class="iconfont icon-star icon-next"></span>
       <span class="icon-text">{{ post.favoriteCount }} 收藏</span>

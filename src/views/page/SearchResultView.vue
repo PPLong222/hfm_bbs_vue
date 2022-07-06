@@ -201,7 +201,7 @@ export default {
 .content-right {
   float: right;
   width: 320px;
-  background-color: #8c8c93;
+  background-color: #ffffff;
   height: 200px;
   margin-left: 10px;
 }

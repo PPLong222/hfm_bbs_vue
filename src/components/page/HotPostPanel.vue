@@ -46,12 +46,12 @@
 
 <script>
 // 先用热榜的来替代
-import {getHotPostList} from "@/api/api";
+import {getHotPost} from "@/api/api";
 
 export default {
   name: "HotPostPanel",
   created() {
-    getHotPostList().then(res => {
+    getHotPost().then(res => {
       if (this.utils.isRequestSuccess(res)) {
         this.mainHotPostList = res.data.slice(0, 3)
         this.subHotPost = res.data.slice(3, 7)
@@ -95,8 +95,8 @@ export default {
 }
 
 .hot-post-img {
-  height: auto;
-  width: auto;
+  height: 70%;
+  width: 100%;
   border-radius: 4px;
 }
 

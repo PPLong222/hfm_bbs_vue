@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="post-cover">
-      <el-image :src="post.url" class="post-cover-img" lazy>
+      <el-image :src="post.cover" class="post-cover-img" lazy>
         <el-image slot="placeholder" :src="require('@/assets/images/image_loading.gif')" class="image-slot"/>
       </el-image>
     </div>

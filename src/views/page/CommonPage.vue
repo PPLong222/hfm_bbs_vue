@@ -8,8 +8,8 @@
             <single-post-view v-for="post of postList" v-bind:key="post.id"
                               :post="post"></single-post-view>
           </div>
-          <el-image v-if="!isRequestEnd" :src="require('@/assets/images/loading.gif')" alt="" class="loading-gif"/>
-          <div v-if="isRequestEnd" class="post-end-text">已经到底了</div>
+          <!--          <el-image v-if="!isRequestEnd" :src="require('@/assets/images/loading.gif')" alt="" class="loading-gif"/>-->
+          <div class="post-end-text">已经到底了</div>
         </div>
       </div>
       <div class="content-right">
@@ -165,6 +165,13 @@ body {
 
 .right-float-subject-content {
   margin-top: 10px;
+}
+
+.post-end-text {
+  margin: 20px auto;
+  padding-bottom: 20px;
+  font-size: 30px;
+  width: 150px;
 }
 
 </style>

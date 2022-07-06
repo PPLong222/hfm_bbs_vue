@@ -80,7 +80,6 @@ export default {
     if (user != null) {
       this.user = user
     }
-    this.user.username = user.userName
   },
   mounted() {
     // 初始化时建立默认scroll, 并获取默认推荐列表
